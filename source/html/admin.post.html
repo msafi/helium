@@ -1,0 +1,27 @@
+<div>
+  <form class="form-horizontal" role="form" name="newPostForm">
+    <div class="form-group">
+      <textarea class="form-control"
+                rows="3"
+                ng-model="postBody"
+                placeholder="Post body"
+                id="postBody"
+                required></textarea>
+    </div>
+
+    <div class="form-group">
+      <input type="text"
+             id="postTitle"
+             ng-model="postTitle"
+             class="form-control"
+             placeholder="Post title"
+             required>
+    </div>
+
+    <div class="alert alert-danger" role="alert" ng-if="errorMessage !== undefined">{{errorMessage}}</div>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="submitPost()">Submit</button>
+    </div>
+  </form>
+</div>

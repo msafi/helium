@@ -1,0 +1,6 @@
+<div>
+  <h2 ng-repeat="post in posts">
+    <a ui-sref="post({ postId: post.id })">{{post.title}}</a>
+    <small>{{post.id | date: 'fullDate'}}</small>
+  </h2>
+</div>

@@ -1,0 +1,9 @@
+{
+  "posts": [
+    {
+      "title": "The title of the post",
+      "tags": ["one", "two", "three"],
+      "id": "123455"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-controller="Main" lang="en">
+<head>
+  <title ng-bind="pageTitle"></title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body class="ng-cloak">
+
+<div class="container">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li><a href="#">Refresh posts</a></li>
+    </ul>
+
+    <a ui-sref="homepage"><h3 class="text-muted">MK Safi's blog</h3></a>
+  </div>
+
+  <div class="row marketing">
+    <ui-view></ui-view>
+  </div>
+
+  <div class="footer">
+    <p>
+      <a ui-sref="admin" ui-sref-opts="{ reload: true }">Admin</a>
+      |
+      <a ui-sref="login" ui-sref-opts="{ reload: true }">Login</a>
+      |
+      Powered by <a href="https://github.com/msafi/helium">Helium</a></p>
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.gapiOnLoadCallback = function() {
+    angular.element(document).ready(function() {
+      gapi.client.load('oauth2', 'v2', function() {
+        angular.bootstrap(document, ['helium'])
+      })
+    })
+  }
+</script>
+<script src="//sdk.amazonaws.com/js/aws-sdk-2.0.7.min.js"></script>
+<script src="//apis.google.com/js/client.js?onload=gapiOnLoadCallback"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/controllers.js"></script>
+<script src="/js/services/amazonApi.js"></script>
+<script src="/js/services/user.js"></script>
+<script src="/js/services/config.js"></script>
+<script src="/js/services/localStorage.js"></script>
+<script src="/js/services/postManager.js"></script>
+<script src="/js/services/utils.js"></script>
+<script src="/js/services/blogManager.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ angular.module('helium', [
 ])
 
 .config(
-  function($stateProvider, $locationProvider) {
+  function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
       .state('homepage', {
         url: '/',
@@ -42,7 +42,11 @@ angular.module('helium', [
         controller: 'Post'
       })
 
-    $locationProvider.html5Mode(true)
+    $urlRouterProvider.otherwise("/")
+
+    $locationProvider
+      .html5Mode(false)
+      .hashPrefix('!')
 
     // Add format method to our string type
     // http://stackoverflow.com/a/4673436/604296

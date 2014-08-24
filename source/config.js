@@ -30,7 +30,6 @@ angular.module('helium')
     amazon: {
       s3: {
         bucketName: 'mk-helium-blog',
-        region: ''
       },
       roleArn: 'arn:aws:iam::901881000271:role/helium-blogger'
     }

@@ -1,7 +1,7 @@
 angular.module('helium')
 
 .service('amazonApi',
-  function($q, config, user, localStorage, $http, utils) {
+  function($q, config, user, localStorage, $http) {
     var amazonApi = {}
     var adminRoleArn = config.amazon.roleArn
     var bucketName = config.amazon.s3.bucketName
@@ -68,14 +68,13 @@ angular.module('helium')
             .getObject({
               Bucket: bucketName,
               Key: fileKey,
-              ResponseContentType: 'application/json'
             })
             .on('complete', function(file) {
               getFile.resolve(file)
             })
             .on('error', function(error) {
               console.log(error)
-              getFile.resolve(error)
+              getFile.resolve({ error: error })
             })
             .send()
 
@@ -84,14 +83,40 @@ angular.module('helium')
       },
 
       getFile: function(fileKey) {
-        return $http({
+        var httpOptions = {
           method: 'GET',
           url: bucketUrl + '/' + fileKey
-//          headers: { 'cache-control': 'no-cache' }
-        }).then(function(response) {
+        }
+
+        if (user.hasValidCredentials()) {
+          httpOptions.headers = { 'cache-control': 'no-cache' }
+        }
+
+        return $http(httpOptions).then(function(response) {
           return response.data
         }, function(error) {
           return { error: error.statusText }
+        })
+      },
+
+      deleteObject: function(fileKey) {
+        return amazonApi.authenticate().then(function() {
+          var removeObject = $q.defer()
+
+          new AWS.S3(s3Options)
+            .deleteObject({
+              Bucket: bucketName,
+              Key: fileKey,
+            })
+            .on('complete', function(response) {
+              removeObject.resolve(response)
+            })
+            .on('error', function(error) {
+              removeObject.resolve({ error: error })
+            })
+            .send()
+
+          return removeObject.promise
         })
       }
     })

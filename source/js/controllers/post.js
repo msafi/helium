@@ -4,8 +4,10 @@ angular.module('helium')
   function($scope, $stateParams, postManager) {
     var postId = $stateParams.postId
 
+    $scope.globals.loading = true
     postManager.getPost(postId).then(function(post) {
-      $scope.body = post.body
+      $scope.globals.loading = false
+      $scope.post = post
     })
   }
 )

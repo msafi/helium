@@ -1,0 +1,13 @@
+<div>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="post in posts">
+      {{post.title}}
+      <button type="button"
+              class="btn btn-danger btn-xs badge"
+              ng-click="deletePost(post)">Delete</button>
+    </li>
+    <li class="list-group-item" ng-if="posts.length === 0">
+      You don't have any posts to manage.
+    </li>
+  </ul>
+</div>

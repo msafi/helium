@@ -3,4 +3,6 @@
     <a ui-sref="post({ postId: post.id })">{{post.title}}</a>
     <small>{{post.id | date: 'fullDate'}}</small>
   </h2>
+
+  <h2 ng-if="posts.length === 0">You don't have any posts, yet.</h2>
 </div>

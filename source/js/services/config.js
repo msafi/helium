@@ -25,8 +25,6 @@ angular.module('helium')
 
     google: {
       clientId: '712050489687-62tf7qp59i5932la9jsmkvllbo2qr25g.apps.googleusercontent.com',
-      apiKey: 'AIzaSyADAj7rJx9IfDQKcIeg9lt6RBZXyZIG9CY', // optional
-      redirectUrl: 'http://localhost:8080/authenticate'
     },
 
     amazon: {

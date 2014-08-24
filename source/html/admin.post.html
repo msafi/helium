@@ -4,8 +4,9 @@
       <textarea class="form-control"
                 rows="3"
                 ng-model="postBody"
-                placeholder="Post body"
+                placeholder="Post body. Use Markdown."
                 id="postBody"
+                ng-disabled="globals.loading === true"
                 required></textarea>
     </div>
 
@@ -15,13 +16,17 @@
              ng-model="postTitle"
              class="form-control"
              placeholder="Post title"
+             ng-disabled="globals.loading === true"
              required>
     </div>
 
     <div class="alert alert-danger" role="alert" ng-if="errorMessage !== undefined">{{errorMessage}}</div>
 
     <div class="form-group">
-      <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="submitPost()">Submit</button>
+      <button type="button"
+              class="btn btn-primary btn-lg btn-block"
+              ng-click="submitPost()"
+              ng-disabled="globals.loading === true">Submit</button>
     </div>
   </form>
 </div>

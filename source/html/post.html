@@ -1,1 +1,5 @@
-<div>{{body}}</div>
+<article>
+  <h1>{{post.title}} <small>{{post.id | date:'fullDate'}}</small></h1>
+
+  <div btf-markdown="post.body"></div>
+</article>

@@ -1,5 +1,6 @@
 angular.module('helium', [
-  'ui.router'
+  'ui.router',
+  'btford.markdown'
 ])
 
 .config(

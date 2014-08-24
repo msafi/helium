@@ -12,6 +12,10 @@ angular.module('helium')
 
       newPost: function() {
         $state.go('admin.post')
+      },
+
+      managePosts: function() {
+        $state.go('admin.managePosts')
       }
     })
 
@@ -26,6 +30,11 @@ angular.module('helium')
         case 'admin.post':
           $scope.action = 'Make a new post'
           break
+
+        case 'admin.managePosts':
+          $scope.action = 'Manage posts'
+          break
+
         default:
           $scope.action = ''
       }

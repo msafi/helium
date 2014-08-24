@@ -10,7 +10,7 @@ angular.module('helium')
         var googleAuthentication = $q.defer()
 
         options = options || {}
-        options.immediate = (options.immediate === undefined) ? true : options.immediate
+        options.immediate = options.immediate === undefined
 
         gapi.auth.authorize(
           {

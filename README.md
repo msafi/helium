@@ -4,9 +4,9 @@ It's a blogging app that only requires Amazon S3 and Amazon IAM for its back-end
  
 You can check out my Helium blog [here](http://mk-helium-blog.s3-website-us-east-1.amazonaws.com/#!/). I'll create another demo soon where you can also try out the back-end.
 
-If you're interested in creating your own Helium blog, see the [installation guide](/wiki/Installation-guide).
+If you're interested in creating your own Helium blog, see the [installation guide](https://github.com/msafi/helium/wiki/Installation-guide).
 
-If you're interested in learning more about how it works, see the [concepts documentation](/wiki/concepts).
+If you're interested in learning more about how it works, see the [concepts documentation](https://github.com/msafi/helium/wiki/concepts).
 
 ## License
 

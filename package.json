@@ -1,0 +1,31 @@
+{
+  "name": "helium",
+  "version": "0.0.0",
+  "description": "It's a blogging app that, basically, only requires Amazon S3 for its back-end. Yet, it is able to work like any other blogging platform. You can authenticate yourself as the admin in order to write and edit posts and manage settings, etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msafi/helium.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msafi/helium/issues"
+  },
+  "homepage": "https://github.com/msafi/helium",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-htmlmin": "^0.3.0",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-include-source": "^0.4.1",
+    "grunt-ng-annotate": "^0.3.2",
+    "load-grunt-tasks": "^0.6.0"
+  }
+}

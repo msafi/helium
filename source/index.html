@@ -7,8 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="/vendor/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
+  <!-- fileblock:css css -->
+  <!-- endfileblock -->
 </head>
 
 <body class="ng-cloak">
@@ -36,47 +36,8 @@
 
 </div>
 
-<script type="text/javascript">
-  window.gapiOnLoadCallback = function() {
-    angular.element(document).ready(function() {
-      gapi.client.load('oauth2', 'v2', function() {
-        angular.bootstrap(document, ['helium'])
-      })
-    })
-  }
-</script>
+<!-- fileblock:js js -->
+<!-- endfileblock -->
 
-<script src="/vendor/jquery.min.js"></script>
-<script src="/vendor/lodash.min.js"></script>
-<script src="/vendor/showdown.js"></script>
-<script src="/vendor/angular.min.js"></script>
-<script src="/vendor/angular-ui-router.min.js"></script>
-<script src="/vendor/angular-sanitize.min.js"></script>
-<script src="/vendor/markdown.js"></script>
-
-<script src="//sdk.amazonaws.com/js/aws-sdk-2.0.7.min.js"></script>
-<script src="//apis.google.com/js/client.js?onload=gapiOnLoadCallback"></script>
-
-<script src="/js/app.js"></script>
-
-<script src="/config.js"></script>
-
-<script src="/js/services/amazonApi.js"></script>
-<script src="/js/services/user.js"></script>
-<script src="/js/services/localStorage.js"></script>
-<script src="/js/services/postManager.js"></script>
-<script src="/js/services/utils.js"></script>
-<script src="/js/services/blogManager.js"></script>
-<script src="/js/services/postMapManager.js"></script>
-
-<script src="/js/controllers/Main.js"></script>
-<script src="/js/controllers/Admin.js"></script>
-<script src="/js/controllers/AdminPost.js"></script>
-<script src="/js/controllers/AdminManagePosts.js"></script>
-<script src="/js/controllers/Homepage.js"></script>
-<script src="/js/controllers/Login.js"></script>
-<script src="/js/controllers/Post.js"></script>
-
-<script src="/js/directives/heliumLoading.js"></script>
 </body>
 </html>

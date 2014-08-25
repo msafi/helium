@@ -14,11 +14,12 @@ angular.module('helium')
             body: $scope.postBody,
             id: newPostId
           }).then(function() {
-            $scope.globals.loading = false
             $state.go('post', { postId: newPostId })
+          }).finally(function() {
+            $scope.globals.loading = false
           })
         } else {
-          $scope.errorMessage = config.general.errorMessages.invalidForm
+          $scope.errorMessage = config.messages.invalidForm
         }
       }
     })

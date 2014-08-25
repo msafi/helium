@@ -8,16 +8,18 @@ angular.module('helium')
         postManager.deletePost(post).then(function() {
           return postManager.getPosts()
         }).then(function(posts) {
-          $scope.globals.loading = false
           $scope.posts = posts
+        }).finally(function() {
+          $scope.globals.loading = false
         })
       }
     })
 
     $scope.globals.loading = true
     postManager.getPosts().then(function(posts) {
-      $scope.globals.loading = false
       $scope.posts = posts
+    }).finally(function() {
+      $scope.globals.loading = false
     })
   }
 )

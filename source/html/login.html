@@ -1,4 +1,8 @@
 <div>
-  <div class="alert alert-danger" role="alert" ng-if="message">{{message}}</div>
-  <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="authenticateWithGoogle()">Login</button>
+  <div class="alert alert-warning" role="alert" ng-if="initializing">{{initializingMessage}}</div>
+  <div class="alert alert-danger" role="alert" ng-if="message && initializing !== true">{{message}}</div>
+  <button type="button"
+          class="btn btn-primary btn-lg btn-block"
+          ng-click="authenticateWithGoogle()"
+          ng-disabled="initializing === true">Login</button>
 </div>

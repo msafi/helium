@@ -3,7 +3,7 @@ angular.module('helium')
 .controller('Admin',
   function($scope, verificationResults, $state, $rootScope, config) {
     if (verificationResults !== true) {
-      $state.go('login', { authError: config.general.errorMessages.adminAuthError })
+      $state.go('login', { authError: config.messages.adminAuthError })
       return false
     }
 

@@ -6,8 +6,9 @@ angular.module('helium')
 
     $scope.globals.loading = true
     postManager.getPost(postId).then(function(post) {
-      $scope.globals.loading = false
       $scope.post = post
+    }).finally(function() {
+      $scope.globals.loading = false
     })
   }
 )

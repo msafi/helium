@@ -52,7 +52,7 @@ angular.module('helium')
             },
 
             function error() {
-              verify.resolve(false)
+              verify.reject({ error: config.messages.googleAuthenticationError })
             }
           )
         } else {

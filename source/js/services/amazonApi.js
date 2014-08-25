@@ -95,7 +95,7 @@ angular.module('helium')
         return $http(httpOptions).then(function(response) {
           return response.data
         }, function(error) {
-          return { error: error.statusText }
+          return $q.reject({ error: error.statusText })
         })
       },
 

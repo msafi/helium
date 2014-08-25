@@ -1,7 +1,7 @@
 angular.module('helium')
 
 .service('postManager',
-  function($q, utils, amazonApi, blogManager, config, postMapManager) {
+  function($q, utils, amazonApi, blogManager, systemConfig, postMapManager) {
     var postManager = {}
 
     return angular.extend(postManager, {
@@ -47,7 +47,7 @@ angular.module('helium')
     })
 
     function getPostKey(postId) {
-      return config.general.filePaths.posts + postId + '.json'
+      return systemConfig.general.filePaths.posts + postId + '.json'
     }
   }
 )

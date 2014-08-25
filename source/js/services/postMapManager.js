@@ -1,9 +1,9 @@
 angular.module('helium')
 
 .service('postMapManager',
-  function(blogManager, amazonApi, config, $q, utils) {
+  function(blogManager, amazonApi, systemConfig, $q, utils) {
     var postMapManager = {}
-    var postMapLimit = config.general.postMapLimit
+    var postMapLimit = systemConfig.general.postMapLimit
     var latestPostMapKey = ''
     var state = {}
 

@@ -1,7 +1,7 @@
 angular.module('helium')
 
 .controller('AdminPost',
-  function($scope, postManager, config, $state) {
+  function($scope, postManager, systemConfig, $state) {
     var newPostId = postManager.generateId()
 
     angular.extend($scope, {
@@ -19,7 +19,7 @@ angular.module('helium')
             $scope.globals.loading = false
           })
         } else {
-          $scope.errorMessage = config.messages.invalidForm
+          $scope.errorMessage = systemConfig.messages.invalidForm
         }
       }
     })

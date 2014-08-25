@@ -3,8 +3,8 @@ angular.module('helium')
 .service('amazonApi',
   function($q, config, user, localStorage, $http) {
     var amazonApi = {}
-    var adminRoleArn = config.amazon.roleArn
-    var bucketName = config.amazon.s3.bucketName
+    var adminRoleArn = config.amazonRoleArn
+    var bucketName = config.amazonS3BucketName
     var bucketUrl = 'https://s3.amazonaws.com/' + bucketName
     var s3Options = { params: { Bucket: bucketName } }
 

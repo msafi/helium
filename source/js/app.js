@@ -1,4 +1,6 @@
 angular.module('helium', [
+  'helium.templates',
+
   'ui.router',
   'btford.markdown'
 ])

@@ -1,10 +1,10 @@
 angular.module('helium')
 
 .service('blogManager',
-  function(amazonApi, config, $q, utils, $state) {
+  function(amazonApi, systemConfig, $q, utils, $state) {
     var blogManager = {}
-    var stateFileName = config.general.fileNames.state
-    var stateFilePath = config.general.filePaths.state + stateFileName
+    var stateFileName = systemConfig.general.fileNames.state
+    var stateFilePath = systemConfig.general.filePaths.state + stateFileName
 
     return angular.extend(blogManager, {
       updateState: function(newState, fresh) {
@@ -65,9 +65,9 @@ angular.module('helium')
           },
 
           function error(results) {
-            if (results.error === config.messages.googleAuthenticationError) {
+            if (results.error === systemConfig.messages.googleAuthenticationError) {
               // We could not upload initialization files because user is not authenticated. Ask user to authenticate.
-              $state.go('login', { authError: config.messages.blogNotInitialized })
+              $state.go('login', { authError: systemConfig.messages.blogNotInitialized })
             }
 
             return $q.reject(results)

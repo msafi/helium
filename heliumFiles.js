@@ -4,7 +4,7 @@
  * This module makes dealing with our project files in Grunt and Karma very convenient. It allows you to
  * request an array of project files like so:
  *
- * files.indexHtml().apptributesScripts().vendorScripts().fonts().views().bring()
+ * files.indexHtml().heliumScripts().vendorScripts().fonts().views().bring()
  *
  * Always call the bring() function at the end. The bring function takes a string which it can prefix to the
  * returned paths.
@@ -19,6 +19,12 @@ var files = {}
  * Array to host the files which will be returned by chaining
  */
 var arrOfFiles = []
+
+files.all = function() {
+  arrOfFiles.push('**')
+
+  return files
+}
 
 files.indexHtml = function() {
   arrOfFiles.push('index.html')
@@ -62,12 +68,12 @@ files.templatesJs = function() {
 
 files.heliumScripts = function() {
   files.templatesJs()
-  files.directives()
-
   files.app()
   files.services()
   files.controllers()
   files.filters()
+  files.directives()
+  files.config()
 
   return files
 }
@@ -93,7 +99,7 @@ files.vendorScripts = function() {
 }
 
 /**
- * Vendor + Apptribute scripts
+ * Vendor + Helium scripts
  */
 files.allScripts = function() {
   files.vendorScripts()
@@ -103,7 +109,7 @@ files.allScripts = function() {
 }
 
 
-files.apptributesStyles = function() {
+files.heliumStyles = function() {
   arrOfFiles.push(
     'css/**/*.css'
   )
@@ -121,7 +127,7 @@ files.vendorStyles = function() {
 
 files.allStyles = function() {
   files.vendorStyles()
-  files.apptributesStyles()
+  files.heliumStyles()
 
   return files
 }

@@ -1,9 +1,9 @@
 angular.module('helium')
 
 .service('user',
-  function(config, $location, localStorage, utils, $q) {
+  function(config, systemConfig, $location, localStorage, utils, $q) {
     var user = {}
-    var clientId = config.google.clientId
+    var clientId = config.googleClientId
 
     return angular.extend(user, {
       authenticateWithGoogle: function(options) {
@@ -52,7 +52,7 @@ angular.module('helium')
             },
 
             function error() {
-              verify.reject({ error: config.messages.googleAuthenticationError })
+              verify.reject({ error: systemConfig.messages.googleAuthenticationError })
             }
           )
         } else {

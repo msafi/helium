@@ -1,7 +1,7 @@
 angular.module('helium')
 
 .service('utils',
-  function(config) {
+  function(systemConfig) {
 
     return {
       currentTime: function() {
@@ -22,7 +22,7 @@ angular.module('helium')
       },
 
       getPostMapKey: function(postMapNumber) {
-        return '{0}post-map-{1}.json'.format(config.general.filePaths.postMaps, postMapNumber)
+        return '{0}post-map-{1}.json'.format(systemConfig.general.filePaths.postMaps, postMapNumber)
       },
     }
   }

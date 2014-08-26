@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             expand: true,
             dot: true,
             cwd: 'source',
-            src: files.all().bring(),
+            src: files.allScripts().allStyles().views().indexHtml().bring(),
             dest: 'build/'
           }
         ]

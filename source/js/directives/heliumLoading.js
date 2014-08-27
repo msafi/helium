@@ -4,7 +4,7 @@ angular.module('helium')
   function() {
     return {
       restrict: 'E',
-      templateUrl: '/html/helium-loading.html',
+      templateUrl: 'html/helium-loading.html',
     }
   }
 )

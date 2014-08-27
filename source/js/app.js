@@ -10,37 +10,45 @@ angular.module('helium', [
     $stateProvider
       .state('homepage', {
         url: '/',
-        templateUrl: '/html/homepage.html',
+        templateUrl: 'html/homepage.html',
         controller: 'Homepage'
       })
       .state('login', {
         url: '/login?state&authError',
-        templateUrl: '/html/login.html',
+        templateUrl: 'html/login.html',
         controller: 'Login',
       })
       .state('admin', {
         url: '/admin',
-        templateUrl: '/html/admin.html',
+        templateUrl: 'html/admin.html',
         controller: 'Admin',
         resolve: {
           verificationResults: function(user) {
-            return user.verify()
+            return user.verify().then(
+              function success() {
+                return true
+              },
+
+              function error() {
+                return false
+              }
+            )
           }
         }
       })
       .state('admin.post', {
         url: '/post',
-        templateUrl: '/html/admin.post.html',
+        templateUrl: 'html/admin.post.html',
         controller: 'AdminPost'
       })
       .state('admin.managePosts', {
         url: '/manage-posts',
-        templateUrl: '/html/admin.manage-posts.html',
+        templateUrl: 'html/admin.manage-posts.html',
         controller: 'AdminManagePosts'
       })
       .state('post', {
         url: '/{postId:[0-9]{13,}}',
-        templateUrl: '/html/post.html',
+        templateUrl: 'html/post.html',
         controller: 'Post'
       })
 

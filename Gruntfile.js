@@ -44,6 +44,18 @@ module.exports = function(grunt) {
             dest: 'build/'
           }
         ]
+      },
+
+      build: {
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '.tmp',
+            src: files.indexHtml().bring(),
+            dest: 'build/'
+          }
+        ]
       }
     },
 
@@ -69,9 +81,8 @@ module.exports = function(grunt) {
     html2js: {
       views: {
         options: {
-          base: '.tmp',
+          base: './.tmp',
           module: 'helium.templates',
-          useStrict: true,
         },
         src: files.views().bring('.tmp/'),
         dest: '.tmp/js/templates.js'
@@ -85,7 +96,27 @@ module.exports = function(grunt) {
           js: {
             src: files.allScripts().bring(),
             cwd: 'build/'
+          },
+
+          css: {
+            src: files.allStyles().bring(),
+            cwd: 'build/'
           }
+        }
+      },
+
+      build: {
+        src: '.tmp/index.html',
+        blocks: {
+          js: {
+            src: files.compiledVendorScripts().compiledScripts().config().bring(),
+            cwd: '.tmp/'
+          },
+
+          css: {
+            src: files.compiledStyles().bring(),
+            cwd: '.tmp/'
+          },
         }
       }
     },
@@ -100,7 +131,11 @@ module.exports = function(grunt) {
 
     watch: {
       dev: {
-        files: files.all().bring('source/').concat(['heliumFiles.js', 'server/server.js']),
+        files: files.all().bring('source/').concat([
+          'Gruntfile.js',
+          'heliumFiles.js',
+          'server/server.js'
+        ]),
         tasks: ['develop'],
         options: {
           spawn: false,
@@ -109,22 +144,72 @@ module.exports = function(grunt) {
       }
     },
 
-//    cssmin: {
-//      apptributes: {
-//        options: {
-//          keepSpecialComments: 0
-//        },
-//        src: files.apptributesStyles().bring('.tmp/'),
-//        dest: 'build/static/style.css'
-//      },
-//      vendor: {
-//        options: {
-//          keepSpecialComments: 0
-//        },
-//        src: files.vendorStyles().bring('.tmp/'),
-//        dest: 'build/static/vendorStyle.css'
-//      }
-//    }
+    cssmin: {
+      build: {
+        options: {
+          keepSpecialComments: 0
+        },
+        files: {
+          '.tmp/helium.css': files.allStyles().bring('.tmp/')
+        }
+      }
+    },
+
+    uglify: {
+      heliumScriptsWithoutConfig: {
+        options: {
+          compress: {
+            sequences: true, properties: true, dead_code: true, drop_debugger: true, unsafe: true,
+            conditionals: true, comparisons: true, evaluate: true, booleans: true, loops: true, unused: true,
+            if_return: true, join_vars: true, cascade: true, negate_iife: true
+          },
+          mangle: true
+        },
+        files: {
+          '.tmp/helium.js': files.heliumScriptsWithoutConfig().bring('.tmp/'),
+        },
+      },
+
+      vendorScripts: {
+        options: {
+          preserveComments: false,
+          compress: {
+            sequences: false, properties: false, dead_code: false, drop_debugger: false, unsafe: false,
+            conditionals: false, comparisons: false, evaluate: false, booleans: false, loops: false, unused: false,
+            hoist_funs: false, hoist_vars: false, if_return: false, join_vars: false, cascade: false,
+            side_effects: false, warnings: false,
+          },
+          mangle: false
+        },
+        files: {
+          '.tmp/vendor.js': files.vendorScripts().bring('.tmp/')
+        }
+      },
+    },
+
+    smoosher: {
+      build: {
+        files: {
+          '.tmp/index.html': '.tmp/index.html'
+        }
+      }
+    },
+
+    ngAnnotate: {
+      options: {
+        singleQuotes: true,
+      },
+      build: {
+        files: [
+          {
+            expand: true,
+            src: files.heliumScripts().bring(),
+            cwd: '.tmp',
+            dest: '.tmp'
+          },
+        ],
+      },
+    },
   })
 
   grunt.registerTask('develop', [
@@ -133,5 +218,19 @@ module.exports = function(grunt) {
     'fileblocks:dev',
     'express:dev',
     'watch:dev'
+  ])
+
+  grunt.registerTask('build', [
+    'clean:buildAndTmpFolders',
+    'copy:allSourceToTmp',
+    'htmlmin:views',
+    'html2js:views',
+    'cssmin:build',
+    'ngAnnotate:build',
+    'uglify:heliumScriptsWithoutConfig',
+    'uglify:vendorScripts',
+    'fileblocks:build',
+    'smoosher:build',
+    'copy:build'
   ])
 }

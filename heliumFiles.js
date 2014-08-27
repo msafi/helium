@@ -67,13 +67,19 @@ files.templatesJs = function() {
 }
 
 files.heliumScripts = function() {
+  files.heliumScriptsWithoutConfig()
+  files.config()
+
+  return files
+}
+
+files.heliumScriptsWithoutConfig = function() {
   files.templatesJs()
   files.app()
   files.services()
   files.controllers()
   files.filters()
   files.directives()
-  files.config()
 
   return files
 }
@@ -84,13 +90,7 @@ files.heliumScripts = function() {
 files.vendorScripts = function() {
   arrOfFiles.push(
     'vendor/angular-manual-bootstrap.js',
-    'vendor/gapi.js',
-    'vendor/bower_components/jquery/dist/jquery.min.js',
-    'vendor/bower_components/lodash/dist/lodash.min.js',
-    'vendor/bower_components/aws-sdk/dist/aws-sdk.min.js',
     'vendor/bower_components/showdown/compressed/showdown.js',
-    'vendor/bower_components/angular/angular.min.js',
-    'vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js',
     'vendor/bower_components/angular-sanitize/angular-sanitize.min.js',
     'vendor/bower_components/angular-markdown-directive/markdown.js'
   )
@@ -119,7 +119,7 @@ files.heliumStyles = function() {
 
 files.vendorStyles = function() {
   arrOfFiles.push(
-    'vendor/bower_components/bootstrap/dist/css/bootstrap.min.css'
+
   )
 
   return files
@@ -190,7 +190,15 @@ files.revisionedCompiledStyles = function() {
 
 files.compiledScripts = function() {
   arrOfFiles.push(
-    'app.js'
+    'helium.js'
+  )
+
+  return files
+}
+
+files.compiledVendorScripts = function() {
+  arrOfFiles.push(
+    'vendor.js'
   )
 
   return files
@@ -198,7 +206,7 @@ files.compiledScripts = function() {
 
 files.compiledStyles = function() {
   arrOfFiles.push(
-    'style.css'
+    'helium.css'
   )
 
   return files

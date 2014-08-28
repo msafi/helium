@@ -1,6 +1,5 @@
 .idea
 .tmp
-build
 bower_components
 # Logs
 logs

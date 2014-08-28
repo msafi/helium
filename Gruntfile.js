@@ -3,7 +3,6 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt)
 
-  // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -206,10 +205,31 @@ module.exports = function(grunt) {
             src: files.heliumScripts().bring(),
             cwd: '.tmp',
             dest: '.tmp'
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
+
+    karma: {
+      test: {
+        configFile: 'tests/karma.conf.js',
+        singleRun: true,
+        browsers: ['Chrome'],
+        coverageReporter: {
+          type: 'lcov',
+          dir: 'coverage/',
+          subdir: function(browser) {
+            return browser.toLowerCase().split(/[ /-]/)[0]
+          }
+        }
+      }
+    },
+
+    open: {
+      coverage: {
+        path: 'tests/coverage/chrome/lcov-report/index.html'
+      }
+    }
   })
 
   grunt.registerTask('develop', [
@@ -232,5 +252,10 @@ module.exports = function(grunt) {
     'fileblocks:build',
     'smoosher:build',
     'copy:build'
+  ])
+
+  grunt.registerTask('test', [
+    'karma:test',
+    'open:coverage'
   ])
 }

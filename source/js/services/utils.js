@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('helium')
 
 .service('utils',
@@ -5,17 +7,18 @@ angular.module('helium')
 
     return {
       currentTime: function() {
-        return (new Date).getTime()
+        return (new Date()).getTime()
       },
 
       parseHashQs: function() {
         var params = {}
         var queryString = location.hash.substring(1)
         var regex = /([^&=]+)=([^&]*)/g
-        var m
+        var m = regex.exec(queryString)
 
-        while (m = regex.exec(queryString)) {
+        while (m) {
           params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+          m = regex.exec(queryString)
         }
 
         return params

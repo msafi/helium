@@ -1,7 +1,9 @@
+'use strict';
+
 angular.module('helium')
 
 .service('postManager',
-  function($q, utils, amazonApi, blogManager, systemConfig, postMapManager) {
+  function($q, utils, backend, blogManager, systemConfig, postMapManager) {
     var postManager = {}
 
     return angular.extend(postManager, {
@@ -13,7 +15,7 @@ angular.module('helium')
         postFile.acl = 'public-read'
 
         return $q.all({
-          uploadPost: amazonApi.uploadJson(postFile),
+          uploadPost: backend.uploadJson(postFile),
           updatePostMaps: postMapManager.update(post)
         })
       },
@@ -22,14 +24,14 @@ angular.module('helium')
         return blogManager.getState().then(function(state) {
           return utils.getPostMapKey(state.latestPostMapNumber)
         }).then(function(latestPostMapFileName) {
-          return amazonApi.getFile(latestPostMapFileName)
+          return backend.getFile(latestPostMapFileName)
         }).then(function(postMap) {
           return postMap.posts
         })
       },
 
       getPost: function(postId) {
-        return amazonApi.getFile(getPostKey(postId)).then(function(post) {
+        return backend.getFile(getPostKey(postId)).then(function(post) {
           return post
         })
       },
@@ -40,7 +42,7 @@ angular.module('helium')
 
       deletePost: function(post) {
         return $q.all({
-          deletePostFile: amazonApi.deleteObject(getPostKey(post.id)),
+          deletePostFile: backend.deleteFile(getPostKey(post.id)),
           updatePostMaps: postMapManager.update(post, true)
         })
       }

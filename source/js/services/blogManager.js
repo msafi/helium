@@ -1,7 +1,9 @@
+'use strict';
+
 angular.module('helium')
 
 .service('blogManager',
-  function(amazonApi, systemConfig, $q, utils, $state) {
+  function(backend, systemConfig, $q, utils, $state) {
     var blogManager = {}
     var stateFileName = systemConfig.general.fileNames.state
     var stateFilePath = systemConfig.general.filePaths.state + stateFileName
@@ -15,7 +17,7 @@ angular.module('helium')
             return newState
           }
         }).then(function(_newState) {
-          return amazonApi.uploadJson({
+          return backend.uploadJson({
             key: stateFilePath,
             body: angular.extend(_newState, newState),
             acl: 'public-read'
@@ -29,10 +31,10 @@ angular.module('helium')
         var originalPostMapFile = { key: utils.getPostMapKey(1), body: { posts: [], }, acl: 'public-read' }
 
         return $q.all({
-          state: amazonApi.uploadJson(angular.copy(newStateFile)).then(function() {
+          state: backend.uploadJson(angular.copy(newStateFile)).then(function() {
             return newStateFile.body
           }),
-          postMap: amazonApi.uploadJson(angular.copy(originalPostMapFile)).then(function() {
+          postMap: backend.uploadJson(angular.copy(originalPostMapFile)).then(function() {
             return originalPostMapFile.body
           })
         }).then(
@@ -47,7 +49,7 @@ angular.module('helium')
       },
 
       getState: function() {
-        return amazonApi.getFile(stateFilePath).then(
+        return backend.getFile(stateFilePath).then(
           function success(state) {
             return { state: state }
           },

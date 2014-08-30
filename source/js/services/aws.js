@@ -1,16 +1,22 @@
+'use strict';
+
 angular.module('helium')
 
-.service('amazonApi',
-  function($q, config, user, localStorage, $http) {
-    var amazonApi = {}
+.service('aws',
+  function($q, config, user, localStorage) {
+    /* global AWS */
+
+    var aws = {}
     var adminRoleArn = config.amazonRoleArn
     var bucketName = config.amazonS3BucketName
     var bucketUrl = 'https://s3.amazonaws.com/' + bucketName
     var s3Options = { params: { Bucket: bucketName } }
 
-    return angular.extend(amazonApi, {
+    return angular.extend(aws, {
+      bucketUrl: bucketUrl,
+
       authenticate: function() {
-        return user.verify().then(function() {
+        return user.authenticate().then(function() {
           if (AWS.config.credentials === null || AWS.config.credentials.params.RoleArn !== adminRoleArn) {
             AWS.config.credentials = new AWS.WebIdentityCredentials({
               RoleArn: adminRoleArn,
@@ -22,15 +28,8 @@ angular.module('helium')
         })
       },
 
-      uploadJson: function(jsonFile) {
-        jsonFile.body = angular.toJson(jsonFile.body)
-        jsonFile.type = 'application/json'
-
-        return amazonApi.uploadFile(jsonFile)
-      },
-
-      uploadFile: function(file) {
-        return amazonApi.authenticate().then(function() {
+      putObject: function(file) {
+        return aws.authenticate().then(function() {
           var uploadFile = $q.defer()
 
           new AWS.S3(s3Options)
@@ -61,7 +60,7 @@ angular.module('helium')
       },
 
       getObject: function(fileKey) {
-        return amazonApi.authenticate().then(function() {
+        return aws.authenticate().then(function() {
           var getFile = $q.defer()
 
           new AWS.S3(s3Options)
@@ -82,25 +81,8 @@ angular.module('helium')
         })
       },
 
-      getFile: function(fileKey) {
-        var httpOptions = {
-          method: 'GET',
-          url: bucketUrl + '/' + fileKey
-        }
-
-        if (user.hasValidCredentials()) {
-          httpOptions.headers = { 'cache-control': 'no-cache' }
-        }
-
-        return $http(httpOptions).then(function(response) {
-          return response.data
-        }, function(error) {
-          return $q.reject({ error: error.statusText })
-        })
-      },
-
       deleteObject: function(fileKey) {
-        return amazonApi.authenticate().then(function() {
+        return aws.authenticate().then(function() {
           var removeObject = $q.defer()
 
           new AWS.S3(s3Options)

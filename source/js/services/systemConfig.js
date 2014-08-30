@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('helium')
 
 .constant('systemConfig',
@@ -20,7 +22,8 @@ angular.module('helium')
       adminAuthError: 'Restricted area. You need to log-in.',
       invalidForm: 'You need to fill things out.',
       googleAuthenticationError: 'User could not be authenticated with Google.',
-      blogNotInitialized: 'This blog has not been initialized yet. If you are the admin, log-in to kick off automatic initialization.',
+      blogNotInitialized: 'This blog has not been initialized yet. ' +
+                          'If you are the admin, log-in to kick off automatic initialization.',
       initializing: 'Please wait while your blog is being initialized for first time use.'
     },
   }

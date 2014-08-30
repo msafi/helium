@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('helium', [
   'helium.templates',
 
@@ -24,7 +26,7 @@ angular.module('helium', [
         controller: 'Admin',
         resolve: {
           verificationResults: function(user) {
-            return user.verify().then(
+            return user.authenticate().then(
               function success() {
                 return true
               },
@@ -52,7 +54,7 @@ angular.module('helium', [
         controller: 'Post'
       })
 
-    $urlRouterProvider.otherwise("/")
+    $urlRouterProvider.otherwise('/')
 
     $locationProvider
       .html5Mode(false)

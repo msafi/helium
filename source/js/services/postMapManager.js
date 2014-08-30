@@ -1,7 +1,9 @@
+'use strict';
+
 angular.module('helium')
 
 .service('postMapManager',
-  function(blogManager, amazonApi, systemConfig, $q, utils) {
+  function(blogManager, backend, systemConfig, $q, utils) {
     var postMapManager = {}
     var postMapLimit = systemConfig.general.postMapLimit
     var latestPostMapKey = ''
@@ -16,7 +18,7 @@ angular.module('helium')
           state = _state
           latestPostMapKey = utils.getPostMapKey(state.latestPostMapNumber)
 
-          return amazonApi.getFile(latestPostMapKey)
+          return backend.getFile(latestPostMapKey)
         }).then(function(latestPostMap) {
           // We have the latest post map. Let's either update it, delete it, or create a new one.
           var postData = { title: post.title, tags: post.tags, id: post.id }
@@ -43,7 +45,7 @@ angular.module('helium')
             postMapFile.key = latestPostMapKey
             postMapFile.acl = 'public-read'
 
-            asynchronousWork['uploadPostMapFile'] = amazonApi.uploadJson(postMapFile)
+            asynchronousWork['uploadPostMapFile'] = backend.uploadJson(postMapFile)
           } else {
             // We're removing a post
             if (latestPostMap.posts.length <= 1) {
@@ -52,7 +54,7 @@ angular.module('helium')
               // the pointer or delete the file.
               if (state.latestPostMapNumber !== 1) {
                 // not post-map-1.json
-                asynchronousWork['deletePostMap'] = amazonApi.deleteObject(utils.getPostMapKey(state.latestPostMapNumber))
+                asynchronousWork['deletePostMap'] = backend.deleteFile(utils.getPostMapKey(state.latestPostMapNumber))
                 asynchronousWork['updateState'] = blogManager.updateState(--state.latestPostMapNumber, true)
               } else {
                 // post-map-1.json
@@ -62,7 +64,7 @@ angular.module('helium')
                 postMapFile.key = utils.getPostMapKey(state.latestPostMapNumber)
                 postMapFile.acl = 'public-read'
 
-                asynchronousWork['uploadPostMapFile'] = amazonApi.uploadJson(postMapFile)
+                asynchronousWork['uploadPostMapFile'] = backend.uploadJson(postMapFile)
               }
             } else {
               // The post map has more than 1 post. We should remove the post, then update the file.
@@ -72,7 +74,7 @@ angular.module('helium')
               postMapFile.key = utils.getPostMapKey(state.latestPostMapNumber)
               postMapFile.acl = 'public-read'
 
-              asynchronousWork['uploadPostMapFile'] = amazonApi.uploadJson(postMapFile)
+              asynchronousWork['uploadPostMapFile'] = backend.uploadJson(postMapFile)
             }
           }
 

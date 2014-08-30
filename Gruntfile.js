@@ -229,6 +229,77 @@ module.exports = function(grunt) {
       coverage: {
         path: 'tests/coverage/chrome/lcov-report/index.html'
       }
+    },
+
+    jshint: {
+      options: {
+        bitwise: true,
+        immed: true,
+        newcap: true,
+        noarg: true,
+        nonew: true,
+        trailing: true,
+        maxlen: 120,
+        undef: true,
+        browser: true,
+        jquery: true,
+        camelcase: true,
+        eqeqeq: true,
+        indent: 2,
+        quotmark: 'single',
+        unused: true,
+        strict: true,
+        globalstrict: true,
+        sub: true,
+
+        asi: true,
+        eqnull: true,
+        loopfunc: true,
+
+        globals: {
+          angular: false,
+          _: false,
+          FastClick: false,
+          console: false
+        }
+      },
+
+      sourceFiles: {
+        files: {
+          src: files.heliumScripts().bring('source/')
+        }
+      },
+
+      testFiles: {
+        options: {
+          maxlen: 200,
+          globals: {
+            module: false,
+            describe: false,
+            it: false,
+            ddescribe: false,
+            iit: false,
+            xdescribe: false,
+            xit: false,
+            beforeEach: false,
+            afterEach: false,
+            spyOn: false,
+            expect: false,
+            inject: false,
+            fixtures: true,
+            _: false,
+            jasmine: false,
+            $httpBackend: true,
+            config: true,
+            $timeout: true,
+            angular: false,
+            __FIXTURES__: false
+          },
+        },
+        files: {
+          src: files.testFiles().bring('tests/')
+        }
+      },
     }
   })
 
@@ -255,7 +326,11 @@ module.exports = function(grunt) {
   ])
 
   grunt.registerTask('test', [
-    'karma:test',
+    'karma:test'
+  ])
+
+  grunt.registerTask('coverage', [
+    'test',
     'open:coverage'
   ])
 }

@@ -3,7 +3,7 @@
 angular.module('helium')
 
 .service('backend',
-  function($q, config, user, localStorage, $http, aws) {
+  function($q, config, user, lStorage, $http, aws) {
     var backend = {}
     var bucketUrl = aws.bucketUrl
 

@@ -10,7 +10,7 @@ angular.module('helium')
 
     return angular.extend(blogManager, {
       updateState: function(newState, fresh) {
-        $q.all().then(function() {
+        return $q.all().then(function() {
           if (fresh !== true) {
             return blogManager.getState()
           } else {
@@ -26,7 +26,6 @@ angular.module('helium')
       },
 
       initialize: function() {
-        // State file couldn't be found. This means blog files have not been setup. Initial setup is required.
         var newStateFile = { key: stateFilePath, body: { latestPostMapNumber: 1, tags: [] }, acl: 'public-read' }
         var originalPostMapFile = { key: utils.getPostMapKey(1), body: { posts: [], }, acl: 'public-read' }
 
@@ -56,7 +55,9 @@ angular.module('helium')
 
           function error(errorResults) {
             if (errorResults.error === 'Forbidden') {
-              return blogManager.initialize()
+              return blogManager.initialize().catch(function(error) {
+                return $q.reject(error)
+              })
             } else {
               return $q.reject(errorResults)
             }

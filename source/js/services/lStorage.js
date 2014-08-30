@@ -2,7 +2,7 @@
 
 angular.module('helium')
 
-.service('localStorage',
+.service('lStorage',
   function() {
     return {
       setVal: function(key, value) {
@@ -10,11 +10,7 @@ angular.module('helium')
       },
 
       getVal: function(key) {
-        if (localStorage[key] !== undefined) {
-          return angular.fromJson(localStorage[key]).value
-        } else {
-          return null
-        }
+        return (localStorage[key] === undefined) ? undefined : angular.fromJson(localStorage[key]).value
       }
     }
   }

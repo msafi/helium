@@ -3,7 +3,10 @@
 angular.module('helium')
 
 .service('aws',
-  function($q, config, user, localStorage) {
+  // I'm not sure that testing this is necessary.
+  // It is mostly just a wrapper that encapsulates AWS JS SDK.
+  /* istanbul ignore next */
+  function($q, config, user, lStorage) {
     /* global AWS */
 
     var aws = {}
@@ -20,7 +23,7 @@ angular.module('helium')
           if (AWS.config.credentials === null || AWS.config.credentials.params.RoleArn !== adminRoleArn) {
             AWS.config.credentials = new AWS.WebIdentityCredentials({
               RoleArn: adminRoleArn,
-              WebIdentityToken: localStorage.getVal('idToken')
+              WebIdentityToken: lStorage.getVal('idToken')
             })
           }
 

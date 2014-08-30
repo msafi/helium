@@ -3,14 +3,14 @@
 angular.module('helium')
 
 .service('user',
-  function(config, systemConfig, localStorage, utils, gapi, $q) {
+  function(config, systemConfig, lStorage, utils, gapi, $q) {
     var user = {}
 
     return angular.extend(user, {
       hasValidCredentials: function() {
         var currentTime = utils.currentTime()
-        var credentialsExpirationTime = localStorage.getVal('credentialsExpirationTime')
-        var identity = localStorage.getVal('identity')
+        var credentialsExpirationTime = lStorage.getVal('credentialsExpirationTime')
+        var identity = lStorage.getVal('identity')
 
         return credentialsExpirationTime !== undefined &&
                credentialsExpirationTime > currentTime &&
@@ -25,9 +25,9 @@ angular.module('helium')
             function success(authResults) {
               /* jshint camelcase: false */
 
-              localStorage.setVal('credentialsExpirationTime', utils.currentTime() + 3600000)
-              localStorage.setVal('idToken', authResults.id_token)
-              localStorage.setVal('identity', config.amazonRoleArn)
+              lStorage.setVal('credentialsExpirationTime', utils.currentTime() + 3600000)
+              lStorage.setVal('idToken', authResults.id_token)
+              lStorage.setVal('identity', config.amazonRoleArn)
 
               authenticate.resolve(true)
             },

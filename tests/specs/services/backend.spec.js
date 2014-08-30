@@ -43,7 +43,7 @@ describe('backend', function() {
 
       backend.getFile(fileKey)
 
-      $httpBackend.flush()
+      flushAll()
     })
 
     it('sends cache-control: no-cache header if user is logged in', function() {
@@ -59,7 +59,7 @@ describe('backend', function() {
 
       backend.getFile(fileKey)
 
-      $httpBackend.flush()
+      flushAll()
     })
 
     it('returns a promise that resolves to response data when the HTTP request succeeds', function() {
@@ -69,7 +69,7 @@ describe('backend', function() {
         expect(response).toBe('foo')
       })
 
-      $httpBackend.flush()
+      flushAll()
     })
 
     it('returns a promise that rejects with { error: error.statusText } ' +
@@ -80,7 +80,7 @@ describe('backend', function() {
         expect(error).toEqual({ error: 'foo' })
       })
 
-      $httpBackend.flush()
+      flushAll()
     })
   })
 

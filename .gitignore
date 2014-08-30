@@ -1,6 +1,8 @@
 .idea
 .tmp
 bower_components
+build
+
 # Logs
 logs
 *.log

@@ -3,7 +3,7 @@
 angular.module('helium')
 
 .controller('Admin',
-  function($scope, verificationResults, $state, $rootScope, systemConfig) {
+  function($scope, verificationResults, $state, $rootScope, systemConfig, postManager) {
     if (verificationResults !== true) {
       $state.go('login', { authError: systemConfig.messages.adminAuthError })
       return false
@@ -18,6 +18,12 @@ angular.module('helium')
 
       managePosts: function() {
         $state.go('admin.managePosts')
+      },
+
+      rebuildPosts: function() {
+        postManager.rebuildPosts().then(function() {
+          console.log('All posts rebuilt')
+        })
       }
     })
 

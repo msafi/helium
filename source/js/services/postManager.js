@@ -52,19 +52,7 @@ angular.module('helium')
       },
 
       rebuildPosts: function() {
-        return backend.listFiles({ prefix: 'content/posts/', maxKeys: '1000' }).then(function(postFileNames) {
-          var allPostsRebuilt = []
-
-          _.each(postFileNames.Contents, function(postData) {
-            allPostsRebuilt.push(
-              backend.getFile(postData.Key).then(function(post) {
-                return postManager.savePost(post)
-              })
-            )
-          })
-
-          return $q.all(allPostsRebuilt)
-        })
+        return $q.when()
       }
     })
 

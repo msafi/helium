@@ -3,9 +3,6 @@
 angular.module('helium')
 
 .service('gapi',
-  // I'm not sure that testing this is necessary.
-  // It is mostly just a wrapper that encapsulates Google JavaScript client library.
-  /* istanbul ignore next */
   function(config, $q) {
     /* jshint camelcase: false */
     /* global gapi */
@@ -28,6 +25,7 @@ angular.module('helium')
             scope: 'email',
           },
 
+          /* istanbul ignore next */
           function(authResults) {
             if (authResults.error !== undefined) {
               googleAuthentication.reject(authResults)

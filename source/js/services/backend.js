@@ -42,6 +42,18 @@ angular.module('helium')
 
       deleteFile: function(fileKey) {
         return aws.deleteObject(fileKey)
+      },
+
+      listFiles: function(options) {
+        return aws.listObjects(options).then(function(response) {
+          return response.data
+        })
+      },
+
+      getFileMeta: function(fileKey) {
+        return aws.headObject(fileKey).then(function(response) {
+          return response.data.Metadata.data
+        })
       }
     })
   }

@@ -5,12 +5,14 @@ describe('backend', function() {
   var backend
   var aws
   var user
+  var $q
 
   beforeEach(function() {
     inject(function($injector) {
       backend = $injector.get('backend')
       aws = $injector.get('aws')
       user = $injector.get('user')
+      $q = $injector.get('$q')
     })
   })
 
@@ -90,6 +92,30 @@ describe('backend', function() {
 
       expect(backend.deleteFile(fileKey)).toBe('bar')
       expect(aws.deleteObject).toHaveBeenCalledWith(fileKey)
+    })
+  })
+
+  describe('listFiles', function() {
+    it('delegates to aws.listObjects but only returns the data property of the response', function() {
+      spyOn(aws, 'listObjects').and.returnValue($q.when({ foo: 1, data: 2 }))
+
+      backend.listFiles().then(function(results) {
+        expect(results).toBe(2)
+      })
+
+      $timeout.flush()
+    })
+  })
+
+  describe('getFileMeta', function() {
+    it('delegates to aws.headObject but only returns the metadata of the reponse', function() {
+      spyOn(aws, 'headObject').and.returnValue($q.when({ foo: 1, data: { Metadata: { data: 2 } } }))
+
+      backend.getFileMeta().then(function(results) {
+        expect(results).toBe(2)
+      })
+
+      $timeout.flush()
     })
   })
 })

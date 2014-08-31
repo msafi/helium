@@ -260,7 +260,6 @@ module.exports = function(grunt) {
           angular: false,
           _: false,
           FastClick: false,
-          console: false
         }
       },
 

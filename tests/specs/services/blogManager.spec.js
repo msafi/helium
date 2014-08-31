@@ -85,14 +85,13 @@ describe('blogManager', function() {
 
       $timeout.flush()
 
-      expect(backend.uploadJson.calls.count()).toBe(2)
-      expect(initializeResults.state).toBeDefined()
-      expect(initializeResults.postMap).toBeDefined()
+      expect(backend.uploadJson.calls.count()).toBe(1)
+      expect(initializeResults.tags).toBeDefined()
     })
 
     it('returns the results of the operation even if the upload process fails', function() {
       var initializeResults = {}
-      backendUploadJsonSpy.and.returnValue($q.reject('foo'))
+      backendUploadJsonSpy.and.returnValue($q.reject({ body: 'foo' }))
 
       blogManager.initialize().then(angular.noop, function(results) {
         initializeResults = results
@@ -100,7 +99,7 @@ describe('blogManager', function() {
 
       $timeout.flush()
 
-      expect(backend.uploadJson.calls.count()).toBe(2)
+      expect(backend.uploadJson.calls.count()).toBe(1)
       expect(initializeResults).toBe('foo')
     })
   })

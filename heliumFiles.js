@@ -150,6 +150,7 @@ files.views = function() {
 
 files.testFiles = function() {
   arrOfFiles.push(
+    'mocks/**/*.js',
     'specs/**/*.js'
   )
 

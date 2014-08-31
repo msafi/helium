@@ -3,7 +3,6 @@
 describe('postManager', function() {
   var postManager
   var backend
-  var postMapManager
   var blogManager
   var $q
   var utils
@@ -11,7 +10,6 @@ describe('postManager', function() {
   beforeEach(function() {
     inject(function($injector) {
       postManager = $injector.get('postManager')
-      postMapManager = $injector.get('postMapManager')
       backend = $injector.get('backend')
       blogManager = $injector.get('blogManager')
       $q = $injector.get('$q')
@@ -31,7 +29,6 @@ describe('postManager', function() {
 
     beforeEach(function() {
       spyOn(backend, 'uploadJson')
-      spyOn(postMapManager, 'update')
     })
 
     it('creates the post file and uploads it to the back-end', function() {
@@ -39,32 +36,29 @@ describe('postManager', function() {
 
       passedArgument = backend.uploadJson.calls.argsFor(0)[0]
 
-      $timeout.flush()
-
       expect(passedArgument.key).toBeDefined()
       expect(passedArgument.body).toEqual(postContent)
       expect(passedArgument.acl).toBe('public-read')
     })
-
-    it('updates post maps', function() {
-      postManager.savePost(postContent)
-
-      passedArgument = postMapManager.update.calls.argsFor(0)[0]
-
-      $timeout.flush()
-
-      expect(passedArgument).toBe(postContent)
-    })
   })
 
   describe('getPosts', function() {
-    it('asks blogManager for the number of the latest post map then retrieves the latest post map ' +
-       'then returns the posts array from it', function() {
-      spyOn(blogManager, 'getState').and.returnValue($q.when({ latestPostMapNumber: 2 }))
-      spyOn(backend, 'getFile').and.returnValue($q.when({ posts: ['foo', 'bar'] }))
+    it('lists all the files in the posts folder and gets the file meta of each post file', function() {
+      spyOn(backend, 'listFiles').and.returnValue($q.when({ Contents: [{ Key: 1 }, { Key: 2 }] }))
+      spyOn(backend, 'getFileMeta').and.returnValue($q.when('foo'))
 
       postManager.getPosts().then(function(results) {
-        expect(results).toEqual(['foo', 'bar'])
+        expect(results).toEqual(['foo', 'foo'])
+      })
+
+      $timeout.flush()
+    })
+
+    it('returns the error when any of its promises fail', function() {
+      spyOn(backend, 'listFiles').and.returnValue($q.reject(false))
+
+      postManager.getPosts().then(function(results) {
+        expect(results).toBe(false)
       })
 
       $timeout.flush()
@@ -97,19 +91,21 @@ describe('postManager', function() {
   describe('deletePost', function() {
     beforeEach(function() {
       spyOn(backend, 'deleteFile')
-      spyOn(postMapManager, 'update')
 
       postManager.deletePost({ id: 123 })
-
-      $timeout.flush()
     })
 
     it('takes post data and calls backend.deleteFile', function() {
       expect(backend.deleteFile).toHaveBeenCalled()
     })
+  })
 
-    it('updates post maps', function() {
-      expect(postMapManager.update).toHaveBeenCalledWith({ id: 123 }, true)
+  describe('rebuildPosts', function() {
+    it('is used when rebuilding posts is required after changing how the blog works ' +
+       'but for now, it just returns an empty promise', function() {
+      expect(postManager.rebuildPosts().then).toBeDefined()
+
+      $timeout.flush()
     })
   })
 })

@@ -26,23 +26,15 @@ angular.module('helium')
       },
 
       initialize: function() {
-        var newStateFile = { key: stateFilePath, body: { latestPostMapNumber: 1, tags: [] }, acl: 'public-read' }
-        var originalPostMapFile = { key: utils.getPostMapKey(1), body: { posts: [], }, acl: 'public-read' }
+        var newStateFile = { key: stateFilePath, body: { tags: [] }, acl: 'public-read' }
 
-        return $q.all({
-          state: backend.uploadJson(angular.copy(newStateFile)).then(function() {
+        return backend.uploadJson(angular.copy(newStateFile)).then(
+          function success() {
             return newStateFile.body
-          }),
-          postMap: backend.uploadJson(angular.copy(originalPostMapFile)).then(function() {
-            return originalPostMapFile.body
-          })
-        }).then(
-          function success(results) {
-            return results
           },
 
           function error(results) {
-            return $q.reject(results)
+            return $q.reject(results.body)
           }
         )
       },

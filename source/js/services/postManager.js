@@ -3,7 +3,7 @@
 angular.module('helium')
 
 .service('postManager',
-  function($q, utils, backend, blogManager, systemConfig, postMapManager) {
+  function($q, utils, backend, blogManager, systemConfig) {
     var postManager = {}
 
     return angular.extend(postManager, {
@@ -13,20 +13,27 @@ angular.module('helium')
         postFile.key = getPostKey(post.id)
         postFile.body = post
         postFile.acl = 'public-read'
+        postFile.metadata = {
+          title: post.title,
+          id: post.id
+        }
 
-        return $q.all({
-          uploadPost: backend.uploadJson(postFile),
-          updatePostMaps: postMapManager.update(post)
-        })
+        return backend.uploadJson(postFile)
       },
 
       getPosts: function() {
-        return blogManager.getState().then(function(state) {
-          return utils.getPostMapKey(state.latestPostMapNumber)
-        }).then(function(latestPostMapFileName) {
-          return backend.getFile(latestPostMapFileName)
-        }).then(function(postMap) {
-          return postMap.posts
+        return backend.listFiles({ prefix: 'content/posts/' }).then(function(postFileNames) {
+          var getAllPostMeta = []
+
+          _.each(postFileNames.Contents, function(postData) {
+            getAllPostMeta.push(backend.getFileMeta(postData.Key))
+          })
+
+          return $q.all(getAllPostMeta)
+        }).then(function(allPostMeta) {
+          return allPostMeta.reverse()
+        }, function(error) {
+          return error
         })
       },
 
@@ -41,9 +48,22 @@ angular.module('helium')
       },
 
       deletePost: function(post) {
-        return $q.all({
-          deletePostFile: backend.deleteFile(getPostKey(post.id)),
-          updatePostMaps: postMapManager.update(post, true)
+        return backend.deleteFile(getPostKey(post.id))
+      },
+
+      rebuildPosts: function() {
+        return backend.listFiles({ prefix: 'content/posts/', maxKeys: '1000' }).then(function(postFileNames) {
+          var allPostsRebuilt = []
+
+          _.each(postFileNames.Contents, function(postData) {
+            allPostsRebuilt.push(
+              backend.getFile(postData.Key).then(function(post) {
+                return postManager.savePost(post)
+              })
+            )
+          })
+
+          return $q.all(allPostsRebuilt)
         })
       }
     })

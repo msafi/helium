@@ -17,11 +17,12 @@
     "tests"
   ],
   "dependencies": {
-    "lodash": "~2.4.1",
-    "angularjs": "~1.2.22",
-    "angular-ui-router": "~0.2.10",
+    "angular-markdown-directive": "~0.3.0",
+    "angular-mocks": "~1.2.23",
     "jquery": "~2.1.1",
+    "lodash": "~2.4.1",
     "aws-sdk": "~2.0.15",
-    "angular-markdown-directive": "~0.3.0"
+    "angular": "~1.2.23",
+    "angular-ui-router": "~0.2.11"
   }
 }

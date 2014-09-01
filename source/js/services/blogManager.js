@@ -1,21 +1,23 @@
+'use strict';
+
 angular.module('helium')
 
 .service('blogManager',
-  function(amazonApi, systemConfig, $q, utils, $state) {
+  function(backend, systemConfig, $q, utils, $state) {
     var blogManager = {}
     var stateFileName = systemConfig.general.fileNames.state
     var stateFilePath = systemConfig.general.filePaths.state + stateFileName
 
     return angular.extend(blogManager, {
       updateState: function(newState, fresh) {
-        $q.all().then(function() {
+        return $q.all().then(function() {
           if (fresh !== true) {
             return blogManager.getState()
           } else {
             return newState
           }
         }).then(function(_newState) {
-          return amazonApi.uploadJson({
+          return backend.uploadJson({
             key: stateFilePath,
             body: angular.extend(_newState, newState),
             acl: 'public-read'
@@ -24,37 +26,30 @@ angular.module('helium')
       },
 
       initialize: function() {
-        // State file couldn't be found. This means blog files have not been setup. Initial setup is required.
-        var newStateFile = { key: stateFilePath, body: { latestPostMapNumber: 1, tags: [] }, acl: 'public-read' }
-        var originalPostMapFile = { key: utils.getPostMapKey(1), body: { posts: [], }, acl: 'public-read' }
+        var newStateFile = { key: stateFilePath, body: { tags: [] }, acl: 'public-read' }
 
-        return $q.all({
-          state: amazonApi.uploadJson(angular.copy(newStateFile)).then(function() {
+        return backend.uploadJson(angular.copy(newStateFile)).then(
+          function success() {
             return newStateFile.body
-          }),
-          postMap: amazonApi.uploadJson(angular.copy(originalPostMapFile)).then(function() {
-            return originalPostMapFile.body
-          })
-        }).then(
-          function success(results) {
-            return results
           },
 
           function error(results) {
-            return $q.reject(results)
+            return $q.reject(results.body)
           }
         )
       },
 
       getState: function() {
-        return amazonApi.getFile(stateFilePath).then(
+        return backend.getFile(stateFilePath).then(
           function success(state) {
             return { state: state }
           },
 
           function error(errorResults) {
             if (errorResults.error === 'Forbidden') {
-              return blogManager.initialize()
+              return blogManager.initialize().catch(function(error) {
+                return $q.reject(error)
+              })
             } else {
               return $q.reject(errorResults)
             }

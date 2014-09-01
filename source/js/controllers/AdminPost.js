@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('helium')
 
 .controller('AdminPost',
@@ -13,9 +15,15 @@ angular.module('helium')
             title: $scope.postTitle,
             body: $scope.postBody,
             id: newPostId
-          }).then(function() {
-            $state.go('post', { postId: newPostId })
-          }).finally(function() {
+          }).then(
+            function success() {
+              $state.go('post', { postId: newPostId })
+            },
+
+            function error(error) {
+              console.log(error)
+            }
+          ).finally(function() {
             $scope.globals.loading = false
           })
         } else {

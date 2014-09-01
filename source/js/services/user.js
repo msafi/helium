@@ -1,65 +1,46 @@
+'use strict';
+
 angular.module('helium')
 
 .service('user',
-  function(config, systemConfig, $location, localStorage, utils, $q) {
+  function(config, systemConfig, lStorage, utils, gapi, $q) {
     var user = {}
-    var clientId = config.googleClientId
 
     return angular.extend(user, {
-      authenticateWithGoogle: function(options) {
-        var googleAuthentication = $q.defer()
-
-        options = options || {}
-        options.immediate = options.immediate === undefined
-
-        gapi.auth.authorize(
-          {
-            client_id: clientId,
-            response_type: 'token id_token',
-            immediate: options.immediate,
-            scope: 'email',
-          },
-
-          function(authResults) {
-            if (authResults.error !== undefined) {
-              googleAuthentication.reject(authResults)
-            } else {
-              localStorage.setVal('credentialsExpirationTime', utils.currentTime() + 3600000)
-              localStorage.setVal('idToken', authResults.id_token)
-
-              googleAuthentication.resolve(authResults)
-            }
-          }
-        )
-
-        return googleAuthentication.promise
-      },
-
       hasValidCredentials: function() {
         var currentTime = utils.currentTime()
-        var credentialsExpirationTime = localStorage.getVal('credentialsExpirationTime')
+        var credentialsExpirationTime = lStorage.getVal('credentialsExpirationTime')
+        var identity = lStorage.getVal('identity')
 
-        return credentialsExpirationTime !== undefined && credentialsExpirationTime > currentTime
+        return credentialsExpirationTime !== undefined &&
+               credentialsExpirationTime > currentTime &&
+               config.amazonRoleArn === identity
       },
 
-      verify: function() {
-        var verify = $q.defer()
+      authenticate: function(options) {
+        var authenticate = $q.defer()
 
         if (!this.hasValidCredentials()) {
-          user.authenticateWithGoogle().then(
-            function success() {
-              verify.resolve(true)
+          gapi.authorize(options).then(
+            function success(authResults) {
+              /* jshint camelcase: false */
+
+              lStorage.setVal('credentialsExpirationTime', utils.currentTime() + 3600000)
+              lStorage.setVal('idToken', authResults.id_token)
+              lStorage.setVal('identity', config.amazonRoleArn)
+
+              authenticate.resolve(true)
             },
 
             function error() {
-              verify.reject({ error: systemConfig.messages.googleAuthenticationError })
+              authenticate.reject({ error: systemConfig.messages.googleAuthenticationError })
             }
           )
         } else {
-          verify.resolve(true)
+          authenticate.resolve(true)
         }
 
-        return verify.promise
+        return authenticate.promise
       }
     })
   }

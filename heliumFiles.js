@@ -98,6 +98,14 @@ files.vendorScripts = function() {
   return files
 }
 
+files.vendorScriptsCdn = function() {
+  arrOfFiles.push(
+    'http://apis.google.com/js/client.js?onload=handleClientLoad'
+  )
+
+  return files
+}
+
 /**
  * Vendor + Helium scripts
  */
@@ -142,14 +150,20 @@ files.views = function() {
 
 files.testFiles = function() {
   arrOfFiles.push(
+    'mocks/**/*.js',
     'specs/**/*.js'
   )
 
   return files
 }
 
-files.vendorTestFiles = function() {
+files.vendorTestDependencies = function() {
   arrOfFiles.push(
+    'vendor/bower_components/jquery/dist/jquery.min.js',
+    'vendor/bower_components/lodash/dist/lodash.min.js',
+    'vendor/bower_components/aws-sdk/dist/aws-sdk.min.js',
+    'vendor/bower_components/angular/angular.min.js',
+    'vendor/bower_components/angular-ui-router/release/angular-ui-router.min.js',
     'vendor/bower_components/angular-mocks/angular-mocks.js'
   )
 

@@ -1,29 +1,39 @@
+'use strict';
+
 angular.module('helium')
 
 .controller('Login',
-  function($scope, user, $state, $stateParams, systemConfig, blogManager) {
+  function($scope, user, $state, $stateParams, systemConfig, blogManager, $q) {
     angular.extend($scope, {
       message: $stateParams.authError,
 
-      authenticateWithGoogle: function() {
-        return user.authenticateWithGoogle({ immediate: false }).then(
+      authenticate: function() {
+        return user.authenticate({ immediate: false }).then(
           function success() {
             if ($stateParams.authError === systemConfig.messages.blogNotInitialized) {
               $scope.initializingMessage = systemConfig.messages.initializing
               $scope.initializing = true
-              // Kick off initialization
+
+              // Kick off first time initialization
               return blogManager.initialize()
-            } else {
-              return true
             }
           },
 
           function error(authResults) {
             $scope.message = authResults.error
+            return $q.reject(authResults)
           }
-        ).then(function() {
+        ).then(
+          function success() {
+            $state.go('admin')
+          },
+
+          function error(error) {
+            $scope.message = systemConfig.messages.genericError
+            console.log(error)
+          }
+        ).finally(function() {
           $scope.initializing = false
-          $state.go('admin')
         })
       },
     })

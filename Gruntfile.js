@@ -3,7 +3,6 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt)
 
-  // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -206,10 +205,101 @@ module.exports = function(grunt) {
             src: files.heliumScripts().bring(),
             cwd: '.tmp',
             dest: '.tmp'
-          },
-        ],
-      },
+          }
+        ]
+      }
     },
+
+    karma: {
+      test: {
+        configFile: 'tests/karma.conf.js',
+        singleRun: true,
+        browsers: ['Chrome'],
+        coverageReporter: {
+          type: 'lcov',
+          dir: 'coverage/',
+          subdir: function(browser) {
+            return browser.toLowerCase().split(/[ /-]/)[0]
+          }
+        }
+      }
+    },
+
+    open: {
+      coverage: {
+        path: 'tests/coverage/chrome/lcov-report/index.html'
+      }
+    },
+
+    jshint: {
+      options: {
+        bitwise: true,
+        immed: true,
+        newcap: true,
+        noarg: true,
+        nonew: true,
+        trailing: true,
+        maxlen: 120,
+        undef: true,
+        browser: true,
+        jquery: true,
+        camelcase: true,
+        eqeqeq: true,
+        indent: 2,
+        quotmark: 'single',
+        unused: true,
+        strict: true,
+        globalstrict: true,
+        sub: true,
+
+        asi: true,
+        eqnull: true,
+        loopfunc: true,
+
+        globals: {
+          angular: false,
+          _: false,
+          FastClick: false,
+        }
+      },
+
+      sourceFiles: {
+        files: {
+          src: files.heliumScripts().bring('source/')
+        }
+      },
+
+      testFiles: {
+        options: {
+          maxlen: 200,
+          globals: {
+            module: false,
+            describe: false,
+            it: false,
+            ddescribe: false,
+            iit: false,
+            xdescribe: false,
+            xit: false,
+            beforeEach: false,
+            afterEach: false,
+            spyOn: false,
+            expect: false,
+            inject: false,
+            fixtures: true,
+            _: false,
+            jasmine: false,
+            $httpBackend: true,
+            config: true,
+            $timeout: true,
+            angular: false,
+            __FIXTURES__: false
+          },
+        },
+        files: {
+          src: files.testFiles().bring('tests/')
+        }
+      },
+    }
   })
 
   grunt.registerTask('develop', [
@@ -232,5 +322,14 @@ module.exports = function(grunt) {
     'fileblocks:build',
     'smoosher:build',
     'copy:build'
+  ])
+
+  grunt.registerTask('test', [
+    'karma:test'
+  ])
+
+  grunt.registerTask('coverage', [
+    'test',
+    'open:coverage'
   ])
 }

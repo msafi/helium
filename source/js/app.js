@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('helium', [
   'helium.templates',
 
@@ -6,6 +8,8 @@ angular.module('helium', [
 ])
 
 .config(
+  /* istanbul ignore next: this code is mostly declarative and simple. And given how difficult it is to
+     reach it from tests, I decided to skip it. */
   function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
       .state('homepage', {
@@ -24,7 +28,7 @@ angular.module('helium', [
         controller: 'Admin',
         resolve: {
           verificationResults: function(user) {
-            return user.verify().then(
+            return user.authenticate().then(
               function success() {
                 return true
               },
@@ -52,7 +56,7 @@ angular.module('helium', [
         controller: 'Post'
       })
 
-    $urlRouterProvider.otherwise("/")
+    $urlRouterProvider.otherwise('/')
 
     $locationProvider
       .html5Mode(false)

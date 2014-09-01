@@ -1,7 +1,9 @@
+'use strict';
+
 angular.module('helium')
 
 .controller('Admin',
-  function($scope, verificationResults, $state, $rootScope, systemConfig) {
+  function($scope, verificationResults, $state, $rootScope, systemConfig, $q) {
     if (verificationResults !== true) {
       $state.go('login', { authError: systemConfig.messages.adminAuthError })
       return false
@@ -9,14 +11,6 @@ angular.module('helium')
 
     angular.extend($scope, {
       verificationResults: verificationResults,
-
-      newPost: function() {
-        $state.go('admin.post')
-      },
-
-      managePosts: function() {
-        $state.go('admin.managePosts')
-      }
     })
 
     setActionText($state.current.name)

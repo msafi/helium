@@ -6,6 +6,7 @@ describe('AdminManagePosts', function() {
   var $scope
   var postManager
   var $q
+  var $state
 
   function instantiateCtrl() {
     return $controller('AdminManagePosts', {
@@ -19,15 +20,14 @@ describe('AdminManagePosts', function() {
       $controller = $injector.get('$controller')
       $rootScope = $injector.get('$rootScope')
       $q = $injector.get('$q')
-      postManager = $injector.get('postManager')
+      $state =$injector.get('$state')
+//      postManager = $injector.get('postManager')
     })
 
+    $state.go = angular.noop
+    postManager = { getPosts: angular.noop, deletePost: angular.noop }
     $scope = $rootScope.$new()
     $scope.globals = {}
-  })
-
-  afterEach(function() {
-    flushAll()
   })
 
   describe('initialization', function() {
@@ -37,6 +37,8 @@ describe('AdminManagePosts', function() {
       instantiateCtrl()
 
       expect($scope.globals.loading).toBe(true)
+
+      $timeout.flush()
     })
 
     it('calls postManager.getPosts, assigns the results to $scope.posts and ' +
@@ -55,14 +57,16 @@ describe('AdminManagePosts', function() {
   describe('deletePost method', function() {
     it('turns on loading, calls postManager.deletePost(post), and when successful, it removes the post ' +
        'from $scope.posts and turns off loading', function() {
-      $scope.posts = [{ id: 1 }, { id: 2 }, { id: 3 }]
       spyOn(postManager, 'deletePost').and.returnValue($q.when(true))
+      spyOn(postManager, 'getPosts').and.returnValue($q.when([{ id: 1 }, { id: 2 }, { id: 3 }]))
 
       instantiateCtrl()
 
-      $scope.deletePost({ id: 2 })
-
       expect($scope.globals.loading).toBe(true)
+
+      $timeout.flush()
+
+      $scope.deletePost({ id: 2 })
 
       $timeout.flush()
 

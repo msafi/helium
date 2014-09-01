@@ -16,8 +16,6 @@ describe('blogManager', function() {
       $state = $injector.get('$state')
     })
 
-    flushAll()
-
     backendUploadJsonSpy = spyOn(backend, 'uploadJson')
     backendUploadJsonSpy.and.returnValue($q.all())
 

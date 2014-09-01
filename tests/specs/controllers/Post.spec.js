@@ -24,8 +24,6 @@ describe('Post', function() {
 
     $scope = $rootScope.$new()
     $scope.globals = {}
-
-    flushAll()
   })
 
   describe('instantiation', function() {

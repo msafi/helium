@@ -15,8 +15,6 @@ describe('postManager', function() {
       $q = $injector.get('$q')
       utils = $injector.get('utils')
     })
-
-    flushAll()
   })
 
   describe('savePost', function() {

@@ -211,10 +211,16 @@ module.exports = function(grunt) {
     },
 
     karma: {
-      test: {
+      sourceTest: {
         configFile: 'tests/karma.conf.js',
         singleRun: true,
         browsers: ['Chrome'],
+        preprocessors: {
+          "../source/js/**/*.js": ['coverage']
+        },
+        reporters: [
+          'progress', 'coverage'
+        ],
         coverageReporter: {
           type: 'lcov',
           dir: 'coverage/',
@@ -222,6 +228,19 @@ module.exports = function(grunt) {
             return browser.toLowerCase().split(/[ /-]/)[0]
           }
         }
+      },
+
+      buildTest: {
+        options: {
+          files: files.vendorScriptsCdn().bring()
+            .concat(files.vendorTestDependencies().bring('../source/'))
+            .concat(['../.tmp/vendor.js', '../.tmp/helium.js', '../.tmp/config.js'])
+            .concat(files.testFiles().bring())
+        },
+        configFile: 'tests/karma.conf.js',
+        singleRun: true,
+        browsers: ['Chrome'],
+        reporters: ['progress'],
       }
     },
 
@@ -319,13 +338,14 @@ module.exports = function(grunt) {
     'ngAnnotate:build',
     'uglify:heliumScriptsWithoutConfig',
     'uglify:vendorScripts',
+    'karma:buildTest',
     'fileblocks:build',
     'smoosher:build',
     'copy:build'
   ])
 
   grunt.registerTask('test', [
-    'karma:test'
+    'karma:sourceTest'
   ])
 
   grunt.registerTask('coverage', [

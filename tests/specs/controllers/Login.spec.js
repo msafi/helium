@@ -37,8 +37,6 @@ describe('Login', function() {
 
     spyOn($state, 'go')
     spyOn(console, 'log')
-
-    flushAll()
   })
 
   describe('authenticate method', function() {

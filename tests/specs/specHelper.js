@@ -9,6 +9,7 @@ var $q
 var beforeAll = false
 beforeEach(function() {
   module('helium')
+  module('uiRouterMock')
 
   inject(function($injector) {
     $timeout = $injector.get('$timeout')
@@ -17,8 +18,6 @@ beforeEach(function() {
     systemConfig = $injector.get('systemConfig')
     $q = $injector.get('$q')
   })
-
-  $httpBackend.whenGET('html/homepage.html').respond(200)
 
   if (beforeAll === true) {
     return true

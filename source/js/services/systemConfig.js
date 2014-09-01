@@ -21,7 +21,9 @@ angular.module('helium')
       googleAuthenticationError: 'User could not be authenticated with Google.',
       blogNotInitialized: 'This blog has not been initialized yet. ' +
                           'If you are the admin, log-in to kick off automatic initialization.',
-      initializing: 'Please wait while your blog is being initialized for first time use.'
+      initializing: 'Please wait while your blog is being initialized for first time use.',
+      blogInitializationFailed: 'An error occurred during blog initialization.',
+      genericError: 'An error occurred. Check your browser developer console.'
     },
 
     listObjectsMaxKeys: 10,

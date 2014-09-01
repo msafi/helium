@@ -7,10 +7,9 @@ angular.module('helium')
     angular.extend($scope, {
       deletePost: function(post) {
         $scope.globals.loading = true
-        postManager.deletePost(post).then(function() {
-          return postManager.getPosts()
-        }).then(function(posts) {
-          $scope.posts = posts
+
+        return postManager.deletePost(post).then(function() {
+          _.remove($scope.posts, { id: post.id })
         }).finally(function() {
           $scope.globals.loading = false
         })

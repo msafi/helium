@@ -4,7 +4,9 @@ var $httpBackend
 var $timeout
 var config
 var systemConfig
+var $q
 
+var beforeAll = false
 beforeEach(function() {
   module('helium')
 
@@ -13,14 +15,11 @@ beforeEach(function() {
     $httpBackend = $injector.get('$httpBackend')
     config = $injector.get('config')
     systemConfig = $injector.get('systemConfig')
+    $q = $injector.get('$q')
   })
 
   $httpBackend.whenGET('html/homepage.html').respond(200)
-})
 
-
-var beforeAll = false
-beforeEach(function() {
   if (beforeAll === true) {
     return true
   } else {

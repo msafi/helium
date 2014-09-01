@@ -8,6 +8,8 @@ angular.module('helium', [
 ])
 
 .config(
+  /* istanbul ignore next: this code is mostly declarative and simple. And given how difficult it is to
+     reach it from tests, I decided to skip it. */
   function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
       .state('homepage', {

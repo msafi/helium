@@ -3,7 +3,7 @@
 angular.module('helium')
 
 .controller('Login',
-  function($scope, user, $state, $stateParams, systemConfig, blogManager) {
+  function($scope, user, $state, $stateParams, systemConfig, blogManager, $q) {
     angular.extend($scope, {
       message: $stateParams.authError,
 
@@ -14,21 +14,26 @@ angular.module('helium')
               $scope.initializingMessage = systemConfig.messages.initializing
               $scope.initializing = true
 
-              // Kick off initialization
-              return blogManager.initialize().finally(function() {
-                $scope.initializing = false
-                return true
-              })
-            } else {
-              return true
+              // Kick off first time initialization
+              return blogManager.initialize()
             }
           },
 
           function error(authResults) {
             $scope.message = authResults.error
+            return $q.reject(authResults)
           }
-        ).then(function() {
-          $state.go('admin')
+        ).then(
+          function success() {
+            $state.go('admin')
+          },
+
+          function error(error) {
+            $scope.message = systemConfig.messages.genericError
+            console.log(error)
+          }
+        ).finally(function() {
+          $scope.initializing = false
         })
       },
     })

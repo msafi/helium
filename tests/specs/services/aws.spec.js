@@ -86,7 +86,7 @@ describe('aws', function() {
     })
 
     it('does nothing when no conditions are met', function() {
-      AWS.config.credentials = { params: { RoleArn: systemConfig.amazonCognito.roleArn } }
+      AWS.config.credentials = { params: { RoleArn: config.amazonCognitoRoleArn } }
 
       spyOn(AWS, 'CognitoIdentityCredentials')
 

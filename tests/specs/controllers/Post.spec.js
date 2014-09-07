@@ -27,16 +27,18 @@ describe('Post', function() {
   })
 
   describe('instantiation', function() {
-    it('turns on loading indicator, then gets the post from the server, assings post data to $scope.post and then ' +
-       'it turns off loading indicator', function() {
+    it('turns on loading indicator, then gets the post from the server, then $rootScope.$broadcasts the post and ' +
+       'then it turns off loading indicator', function() {
       spyOn(postManager, 'getPost').and.returnValue($q.when('foo'))
+      spyOn($rootScope, '$broadcast')
+
       instantiateCtrl()
 
       expect($scope.globals.loading).toBe(true)
 
       $timeout.flush()
 
-      expect($scope.post).toBe('foo')
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('post', 'foo')
       expect($scope.globals.loading).toBe(false)
     })
   })

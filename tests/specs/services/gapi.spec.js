@@ -1,6 +1,6 @@
 'use strict';
 
-describe('aws', function() {
+describe('gapi', function() {
   var _gapi
 
   beforeEach(function() {

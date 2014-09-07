@@ -41,7 +41,7 @@ angular.module('helium', [
         }
       })
       .state('admin.post', {
-        url: '/post',
+        url: '/post?postId',
         templateUrl: 'html/admin.post.html',
         controller: 'AdminPost'
       })

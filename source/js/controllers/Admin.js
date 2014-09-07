@@ -12,11 +12,5 @@ angular.module('helium')
     angular.extend($scope, {
       verificationResults: verificationResults,
     })
-
-    reactToRouteChange([
-      { name: 'admin.post', value: 'Make a new post' },
-      { name: 'admin.managePosts', value: 'Manage posts' },
-      { name: 'default', value: '' }
-    ], $scope, 'action')
   }
 )

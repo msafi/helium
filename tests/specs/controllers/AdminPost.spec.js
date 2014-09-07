@@ -6,13 +6,15 @@ describe('AdminPost', function() {
   var $scope
   var postManager
   var $state
+  var $stateParams
 
   function instantiateCtrl() {
     return $controller('AdminPost', {
       $scope: $scope,
       postManager: postManager,
       $state: $state,
-      systemConfig: systemConfig
+      systemConfig: systemConfig,
+      $stateParams: $stateParams
     })
   }
 
@@ -20,16 +22,31 @@ describe('AdminPost', function() {
     inject(function($injector) {
       $controller = $injector.get('$controller')
       $rootScope = $injector.get('$rootScope')
+      $stateParams = $injector.get('$stateParams')
+      postManager = $injector.get('postManager')
+      $state = $injector.get('$state')
     })
 
     $scope = $rootScope.$new()
 
     $scope.globals = {}
 
-    postManager = {
-      generateId: angular.noop
-    }
-    $state = { go: jasmine.createSpy(), current: { name: '' }}
+    $stateParams.postId = null
+    spyOn($state, 'go')
+    spyOn(postManager, 'generateId')
+  })
+
+  describe('initialization', function() {
+    it('loads the post for editing if $stateParams.postId is specified', function() {
+      spyOn(postManager, 'getPost').and.returnValue($q.when('foo'))
+      $stateParams.postId = 123
+
+      instantiateCtrl()
+
+      $timeout.flush()
+
+      expect($scope.post).toBe('foo')
+    })
   })
 
   describe('submitPost method', function() {
@@ -48,15 +65,14 @@ describe('AdminPost', function() {
 
     it('turns on the loading indicator, saves the post using postManager.savePost and ' +
        'redirects to the new post when it is saved successfully.', function() {
-      postManager.savePost = jasmine.createSpy().and.returnValue($q.when(true))
+      spyOn(postManager, 'savePost').and.returnValue($q.when(true))
       $scope.newPostForm = { $valid: true }
-
+      
       instantiateCtrl()
 
       $scope.submitPost()
 
       expect($scope.globals.loading).toBe(true)
-
       expect(postManager.savePost).toHaveBeenCalled()
 
       $timeout.flush()

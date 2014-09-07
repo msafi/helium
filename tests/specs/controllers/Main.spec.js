@@ -30,4 +30,24 @@ describe('Main', function() {
       instantiateCtrl()
     }).not.toThrow()
   })
+
+  describe('event listeners', function() {
+    it('assigns post data to $scope.post when the event "post" is broadcast', function() {
+      instantiateCtrl()
+
+      $rootScope.$broadcast('post', 'foo')
+
+      expect($scope.post).toBe('foo')
+    })
+
+    it('sets $scope.post to undefined when the event "$stateChangeStart" is broadcast', function() {
+      instantiateCtrl()
+
+      $scope.post = 'foo'
+
+      $rootScope.$broadcast('$stateChangeStart')
+
+      expect($scope.post).toBeUndefined()
+    })
+  })
 })

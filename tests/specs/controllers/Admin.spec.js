@@ -6,6 +6,7 @@ describe('Admin', function() {
   var $scope
   var verificationResults
   var $state
+  var reactToRouteChange
 
   function instantiateCtrl() {
     return $controller('Admin', {
@@ -13,7 +14,8 @@ describe('Admin', function() {
       verificationResults: verificationResults,
       $state: $state,
       $rootScope: $scope,
-      systemConfig: systemConfig
+      systemConfig: systemConfig,
+      reactToRouteChange: reactToRouteChange
     })
   }
 
@@ -21,12 +23,14 @@ describe('Admin', function() {
     inject(function($injector) {
       $controller = $injector.get('$controller')
       $rootScope = $injector.get('$rootScope')
+      reactToRouteChange = $injector.get('reactToRouteChange')
+      $state = $injector.get('$state')
     })
 
     $scope = $rootScope.$new()
 
     verificationResults = true
-    $state = { go: jasmine.createSpy(), current: { name: '' }}
+    spyOn($state, ['go'])
   })
 
   describe('when verificationResults is not true', function() {
@@ -43,7 +47,7 @@ describe('Admin', function() {
   describe('initialization', function() {
     it('sets $scope.action based on $state.current.name', function() {
       verificationResults = true
-      $state = { go: jasmine.createSpy(), current: { name: 'admin.post' }}
+      $state.current.name = 'admin.post'
 
       instantiateCtrl()
 

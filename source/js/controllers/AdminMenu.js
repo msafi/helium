@@ -5,7 +5,7 @@ angular.module('helium')
 .controller('AdminMenu',
   function($scope, user, $state) {
     angular.extend($scope, {
-      logout: function() {
+      signOut: function() {
         $scope.globals.loading = true
 
         user.signOut().finally(function() {

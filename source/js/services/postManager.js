@@ -47,8 +47,8 @@ angular.module('helium')
         return utils.currentTime()
       },
 
-      deletePost: function(post) {
-        return backend.deleteFile(getPostKey(post.id))
+      deletePost: function(postId) {
+        return backend.deleteFile(getPostKey(postId))
       },
 
       rebuildPosts: function() {

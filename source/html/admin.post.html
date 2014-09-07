@@ -3,7 +3,7 @@
     <div class="form-group">
       <textarea class="form-control"
                 rows="20"
-                ng-model="postBody"
+                ng-model="post.body"
                 placeholder="Post body. Use Markdown."
                 id="postBody"
                 ng-disabled="globals.loading === true"
@@ -13,7 +13,7 @@
     <div class="form-group">
       <input type="text"
              id="postTitle"
-             ng-model="postTitle"
+             ng-model="post.title"
              class="form-control"
              placeholder="Post title"
              ng-disabled="globals.loading === true"

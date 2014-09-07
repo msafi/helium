@@ -3,21 +3,21 @@
 angular.module('helium')
 
 .controller('AdminPost',
-  function($scope, postManager, systemConfig, $state) {
-    var newPostId = postManager.generateId()
+  function($scope, postManager, systemConfig, $state, $stateParams) {
+    var postId = $stateParams.postId  || postManager.generateId()
 
     angular.extend($scope, {
+      post: {},
+
       submitPost: function() {
         if ($scope.newPostForm.$valid === true) {
           $scope.globals.loading = true
 
-          postManager.savePost({
-            title: $scope.postTitle,
-            body: $scope.postBody,
-            id: newPostId
-          }).then(
+          $scope.post.id = postId
+
+          postManager.savePost($scope.post).then(
             function success() {
-              $state.go('post', { postId: newPostId })
+              $state.go('post', { postId: postId })
             },
 
             function error(error) {
@@ -31,5 +31,13 @@ angular.module('helium')
         }
       }
     })
+
+    if ($stateParams.postId) {
+      $scope.globals.loading = true
+      postManager.getPost(postId).then(function(post) {
+        $scope.globals.loading = false
+        $scope.post = post
+      })
+    }
   }
 )

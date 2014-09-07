@@ -4,9 +4,21 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="admin.post">New post</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="admin.editPost">Edit post</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="admin.managePosts">Manage posts</a></li>
+    <li role="presentation">
+      <a role="menuitem" tabindex="-1" ui-sref="admin.post">New post</a>
+    </li>
+    <li role="presentation">
+      <a role="menuitem"
+         tabindex="-1"
+         ui-sref="admin.post({ postId: post.id })"
+         ng-if="$state.is('post')">Edit post</a>
+    </li>
+    <li role="presentation">
+      <a role="menuitem"
+         tabindex="-1"
+         ng-click="deletePost(post.id)"
+         ng-if="$state.is('post')">Delete post</a>
+    </li>
 
     <li role="presentation" class="divider"></li>
 
@@ -14,6 +26,6 @@
 
     <li role="presentation" class="divider"></li>
 
-    <li role="presentation"><a role="menuitem" ng-click="signOut()" tabindex="-1">Log-out</a></li>
+    <li role="presentation"><a role="menuitem" ng-click="signOut()" tabindex="-1">Sign out</a></li>
   </ul>
 </div>

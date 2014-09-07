@@ -1,3 +1,7 @@
+[ng-click] {
+  cursor: pointer;
+}
+
 .admin-dropdown {
   margin-top: 7px;
 }

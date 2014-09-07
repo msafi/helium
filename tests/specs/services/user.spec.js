@@ -80,4 +80,30 @@ describe('user', function() {
       $timeout.flush()
     })
   })
+
+  describe('signOut', function() {
+    it('delegates to gapi.signOut, but also removes user credentials when gapi.signOut finishes', function() {
+      spyOn(gapi, 'signOut').and.returnValue($q.when(true))
+      spyOn(lStorage, 'removeItem')
+
+      user.signOut()
+
+      $timeout.flush()
+
+      expect(gapi.signOut).toHaveBeenCalled()
+      expect(lStorage.removeItem.calls.count()).toBe(3)
+    })
+
+    it('removes user credentials regardless of whether gapi.signOut succeeded or errored', function() {
+      spyOn(gapi, 'signOut').and.returnValue($q.reject(true))
+      spyOn(lStorage, 'removeItem')
+
+      user.signOut()
+
+      $timeout.flush()
+
+      expect(gapi.signOut).toHaveBeenCalled()
+      expect(lStorage.removeItem.calls.count()).toBe(3)
+    })
+  })
 })

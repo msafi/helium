@@ -35,4 +35,18 @@ describe('lStorage', function() {
       expect(lStorage.getVal('foo')).toBeUndefined()
     })
   })
+
+  describe('removeItem', function() {
+    it('removes the item from localStorage if it exists', function() {
+      lStorage.setVal('foo', 'bar')
+
+      lStorage.removeItem('foo')
+
+      expect(lStorage.getVal('foo')).toBeUndefined()
+    })
+
+    it('returns undefined if the value being removed does not exist', function() {
+      expect(lStorage.removeItem('foo')).toBeUndefined()
+    })
+  })
 })

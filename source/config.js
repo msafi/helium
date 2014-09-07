@@ -8,6 +8,12 @@ angular.module('helium')
 
     amazonS3BucketName: 'mk-helium-blog',
 
-    amazonRoleArn: 'arn:aws:iam::901881000271:role/helium-blogger'
+    amazonRoleArn: 'arn:aws:iam::901881000271:role/helium-blogger',
+
+    amazonAccountId: '901881000271',
+
+    amazonCognitoIdentityPoolId: 'us-east-1:3b9d95f2-3f63-4d7d-9fd8-75d1462e96db',
+
+    amazonCognitoRoleArn: 'arn:aws:iam::901881000271:role/Cognito_heliumUnauth_DefaultRole',
   }
 )

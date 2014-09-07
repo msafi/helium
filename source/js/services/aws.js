@@ -11,9 +11,9 @@ angular.module('helium')
     var bucketName = config.amazonS3BucketName
     var bucketUrl = 'https://s3.amazonaws.com/' + bucketName
     var s3Options = { params: { Bucket: bucketName } }
-    var accountId = systemConfig.amazonAccountId
-    var cognitoIdentityPoolId = systemConfig.amazonCognito.identityPoolId
-    var cognitoRoleArn = systemConfig.amazonCognito.roleArn
+    var accountId = config.amazonAccountId
+    var cognitoIdentityPoolId = config.amazonCognitoIdentityPoolId
+    var cognitoRoleArn = config.amazonCognitoRoleArn
 
     return angular.extend(aws, {
       bucketUrl: bucketUrl,

@@ -233,9 +233,9 @@ module.exports = function(grunt) {
       buildTest: {
         options: {
           files: files.vendorScriptsCdn().bring()
-            .concat(files.vendorTestDependencies().bring('../source/'))
-            .concat(['../.tmp/vendor.js', '../.tmp/helium.js', '../.tmp/config.js'])
-            .concat(files.testFiles().bring())
+                      .concat(files.vendorTestDependencies().bring('../source/'))
+                      .concat(['../.tmp/vendor.js', '../.tmp/helium.js', '../.tmp/config.js'])
+                      .concat(files.testFiles().bring())
         },
         configFile: 'tests/karma.conf.js',
         singleRun: true,

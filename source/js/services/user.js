@@ -41,6 +41,14 @@ angular.module('helium')
         }
 
         return authenticate.promise
+      },
+
+      signOut: function() {
+        return gapi.signOut().finally(function() {
+          lStorage.removeItem('credentialsExpirationTime')
+          lStorage.removeItem('idToken')
+          lStorage.removeItem('identity')
+        })
       }
     })
   }

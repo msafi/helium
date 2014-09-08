@@ -40,18 +40,8 @@ angular.module('helium', [
           }
         }
       })
-      .state('admin.post', {
-        url: '/post?postId',
-        templateUrl: 'html/admin.post.html',
-        controller: 'AdminPost'
-      })
-      .state('admin.managePosts', {
-        url: '/manage-posts',
-        templateUrl: 'html/admin.manage-posts.html',
-        controller: 'AdminManagePosts'
-      })
       .state('post', {
-        url: '/{postId:[0-9]{13,}}',
+        url: '/{postId:[0-9]{13,}}?new&edit',
         templateUrl: 'html/post.html',
         controller: 'Post'
       })

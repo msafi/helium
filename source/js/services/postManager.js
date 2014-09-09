@@ -39,8 +39,6 @@ angular.module('helium')
       },
 
       getPost: function(postId, cache) {
-        cache = cache !== false
-
         if (postId === currentPost.id && cache !== false) {
           return $q.when(currentPost)
         } else {

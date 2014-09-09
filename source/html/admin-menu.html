@@ -4,20 +4,28 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation">
-      <a role="menuitem" tabindex="-1" ui-sref="admin.post">New post</a>
-    </li>
-    <li role="presentation">
+    <li role="presentation" ng-if="makingNewPost() !== true">
       <a role="menuitem"
          tabindex="-1"
-         ui-sref="admin.post({ postId: post.id })"
-         ng-if="$state.is('post')">Edit post</a>
+         ng-click="newPost()">New post</a>
     </li>
-    <li role="presentation">
+
+    <li role="presentation" ng-if="$state.is('post') === true && editingPost() !== true && makingNewPost() !== true">
       <a role="menuitem"
          tabindex="-1"
-         ng-click="deletePost(post.id)"
-         ng-if="$state.is('post')">Delete post</a>
+         ui-sref="post({ postId: post.id, edit: true })">Edit post</a>
+    </li>
+
+    <li role="presentation" ng-if="$state.is('post') === true && makingNewPost() !== true">
+      <a role="menuitem"
+         tabindex="-1"
+         ng-click="deletePost(post.id)">Delete post</a>
+    </li>
+
+    <li role="presentation" ng-if="editingPost() === true || makingNewPost() === true">
+      <a role="menuitem"
+         tabindex="-1"
+         ng-click="savePost(post)">Save post</a>
     </li>
 
     <li role="presentation" class="divider"></li>

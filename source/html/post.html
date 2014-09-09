@@ -1,5 +1,36 @@
-<article>
+<article ng-show="displayPublishedPost()">
   <h1>{{post.title}} <small>{{post.id | date:'fullDate'}}</small></h1>
 
   <div btf-markdown="post.body"></div>
+</article>
+
+<article ng-class="{ away: displayPublishedPost() }">
+  <div class="alert alert-danger" role="alert" ng-if="errorMessage !== undefined">{{errorMessage}}</div>
+
+  <form class="form-horizontal" role="form" name="newPostForm">
+    <textarea rows="1"
+              ng-model="post.title"
+              class="form-control"
+              placeholder="Title..."
+              id="postTitle"
+              ng-disabled="globals.loading === true"
+              required></textarea>
+
+    <br>
+
+    <textarea class="form-control"
+              rows="20"
+              ng-model="post.body"
+              placeholder="Your post..."
+              id="postBody"
+              ng-disabled="globals.loading === true"
+              required></textarea>
+  </form>
+
+  <br>
+
+  <ul>
+    <li>Press Cmd+P to toggle preview</li>
+    <li>Press Cmd+Enter to save and publish the post</li>
+  </ul>
 </article>

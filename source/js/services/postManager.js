@@ -5,6 +5,7 @@ angular.module('helium')
 .service('postManager',
   function($q, utils, backend, blogManager, systemConfig) {
     var postManager = {}
+    var currentPost = {}
 
     return angular.extend(postManager, {
       savePost: function(post) {
@@ -37,10 +38,15 @@ angular.module('helium')
         })
       },
 
-      getPost: function(postId) {
-        return backend.getFile(getPostKey(postId)).then(function(post) {
-          return post
-        })
+      getPost: function(postId, cache) {
+        if (postId === currentPost.id && cache !== false) {
+          return $q.when(currentPost)
+        } else {
+          return backend.getFile(getPostKey(postId)).then(function(post) {
+            currentPost = post
+            return post
+          })
+        }
       },
 
       generateId: function() {
@@ -53,6 +59,10 @@ angular.module('helium')
 
       rebuildPosts: function() {
         return $q.when()
+      },
+
+      cachePost: function(post) {
+        currentPost = post
       }
     })
 

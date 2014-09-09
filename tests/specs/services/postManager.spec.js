@@ -73,6 +73,17 @@ describe('postManager', function() {
 
       $timeout.flush()
     })
+
+    it('returns the cached post object instead of contacting the server if the ID of the cached post object is ' +
+       'the same as the given ID argument and the cache flag is not "false"', function() {
+      postManager.cachePost({ id: 123, body: 'foo' })
+
+      postManager.getPost(123).then(function(results) {
+        expect(results.body).toBe('foo')
+      })
+
+      $timeout.flush()
+    })
   })
 
   describe('generateId', function() {
@@ -102,6 +113,18 @@ describe('postManager', function() {
     it('is used when rebuilding posts is required after changing how the blog works ' +
        'but for now, it just returns an empty promise', function() {
       expect(postManager.rebuildPosts().then).toBeDefined()
+
+      $timeout.flush()
+    })
+  })
+
+  describe('cachePost method', function() {
+    it('caches the post locally in the service for quicker retrieval by other methods', function() {
+      postManager.cachePost({ id: 123, body: 'foo' })
+
+      postManager.getPost(123).then(function(results) {
+        expect(results.body).toBe('foo')
+      })
 
       $timeout.flush()
     })

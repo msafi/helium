@@ -1,6 +1,6 @@
 'use strict';
 
-describe('AdminManagePosts', function() {
+xdescribe('AdminManagePosts', function() {
   var $controller
   var $rootScope
   var $scope

@@ -7,14 +7,19 @@ angular.module('helium')
     var user = {}
 
     return angular.extend(user, {
+      isAdmin: function() {
+        var identity = lStorage.getVal('identity')
+
+        return config.amazonRoleArn === identity
+      },
+
       hasValidCredentials: function() {
         var currentTime = utils.currentTime()
         var credentialsExpirationTime = lStorage.getVal('credentialsExpirationTime')
-        var identity = lStorage.getVal('identity')
 
         return credentialsExpirationTime !== undefined &&
                credentialsExpirationTime > currentTime &&
-               config.amazonRoleArn === identity
+               user.isAdmin() === true
       },
 
       authenticate: function(options) {

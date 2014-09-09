@@ -17,7 +17,7 @@
 
 <div class="container">
   <div class="header">
-    <ng-include ng-if="userHasValidCredentials()"
+    <ng-include ng-if="isAdmin() === true"
                 src="'html/admin-menu.html'"></ng-include>
 
     <a ui-sref="homepage"><h3 class="text-muted">Helium blog</h3></a>

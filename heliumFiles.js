@@ -100,7 +100,7 @@ files.vendorScripts = function() {
 
 files.vendorScriptsCdn = function() {
   arrOfFiles.push(
-    'http://apis.google.com/js/client.js?onload=handleClientLoad'
+//    'http://apis.google.com/js/client.js?onload=handleClientLoad'
   )
 
   return files

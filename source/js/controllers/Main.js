@@ -16,7 +16,8 @@ angular.module('helium')
       $state: $state,
       globals: { loading: false },
       pageTitle: pageTitle,
-      userHasValidCredentials: user.hasValidCredentials
+
+      isAdmin: user.isAdmin
     })
   }
 )

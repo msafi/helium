@@ -1,0 +1,58 @@
+<div>
+  <form role="form">
+    <h2>Website settings</h2>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" ng-model="profile.name">
+    </div>
+
+    <div class="form-group">
+      <label for="picture">Picture</label>
+      <input type="file" id="picture" he-onfileselect="picture">
+      <p class="help-block" ng-if="profile.picture !== undefined">
+        Current image is <code>{{profile.picture}}</code>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label for="headerImage">Header image</label>
+      <input type="file" id="headerImage" he-onfileselect="headerImage">
+      <p class="help-block">This is a big image that will appear at the top of the homepage.</p>
+      <p class="help-block" ng-if="profile.headerImage !== undefined">
+        Current image is <code>{{profile.headerImage}}</code>
+      </p>
+
+    </div>
+
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea class="form-control" id="bio" ng-model="profile.bio" rows="5"></textarea>
+      <p class="help-block">
+        This text will also appear on your homepage. You can use HTML or Markdown to write this, so you can do
+        links, images, whatever you want!
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label for="socialLinks">Social links</label>
+      <textarea class="form-control" id="socialLinks" ng-model="profile.socialLinks" rows="5"></textarea>
+
+      <p class="help-block">
+        Put the links to your web profiles (Facebook, Twitter, Goolge+, etc) in this box. They will appear as icons on
+        the homepage. Each link should be in a new line.<br><br>
+
+        For example:<br><br>
+
+        http://twitter.com/msafi<br>
+        http://facebook.com/mksafi<br>
+        http://instagram.com/msafi<br>
+        https://github.com/msafi/<br>
+      </p>
+    </div>
+
+    <hr>
+
+    <button type="button" ng-click="submit()" class="btn btn-primary btn-lg btn-block">Save</button>
+  </form>
+</div>

@@ -13,6 +13,7 @@ angular.module('helium')
     })
     
     angular.extend($scope, {
+      name: config.name,
       $state: $state,
       globals: { loading: false },
       pageTitle: pageTitle,

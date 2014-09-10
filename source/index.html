@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html ng-controller="Main" lang="en">
-<head>
-  <title ng-bind="pageTitle.value"></title>
+<!DOCTYPE html><html ng-controller="Main" lang="en"><head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- fileblock:js config -->
+<!-- endfileblock -->
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<title ng-bind="pageTitle.value"></title>
 
-  <!-- fileblock:css css -->
-  <!-- endfileblock -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- fileblock:css css -->
+<!-- endfileblock -->
 </head>
 
 <body class="ng-cloak">
@@ -20,7 +22,7 @@
     <ng-include ng-if="isAdmin() === true"
                 src="'html/admin-menu.html'"></ng-include>
 
-    <a ui-sref="homepage"><h3 class="text-muted">Helium blog</h3></a>
+    <a ui-sref="homepage"><h3 class="text-muted" ng-bind="name"></h3></a>
   </div>
 
   <div class="progress" ng-if="globals.loading">
@@ -40,6 +42,7 @@
 <script src="//sdk.amazonaws.com/js/aws-sdk-2.0.15.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
 
 <!-- fileblock:js js -->
 <!-- endfileblock -->
@@ -48,3 +51,8 @@
 
 </body>
 </html>
+<!--
+
+  This website is powered by Helium http://lightelement.github.io/helium
+
+-->

@@ -7,13 +7,13 @@ angular.module('helium')
     general: {
       filePaths: {
         posts: 'content/posts/',
-        state: 'content/'
-      },
-
-      fileNames: {
-        state: 'state.json'
+        media: 'content/media/'
       },
     },
+
+    supportedSiteLinks: [
+      'twitter.com', 'facebook.com', 'plus.google.com', 'github.com', 'instagram.com'
+    ],
 
     messages: {
       adminAuthError: 'Restricted area. You need to log-in.',
@@ -24,7 +24,8 @@ angular.module('helium')
       initializing: 'Please wait while your blog is being initialized for first time use.',
       blogInitializationFailed: 'An error occurred during blog initialization.',
       genericError: 'An error occurred. Check your browser developer console.',
-      confirmPostDeletion: 'This post is about to be deleted...'
+      confirmPostDeletion: 'This post is about to be deleted...',
+      homepageTitlePrefix: 'Website of '
     },
 
     listObjectsMaxKeys: 10,

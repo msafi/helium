@@ -1,6 +1,6 @@
 'use strict';
 
-describe('pageTitle', function() {
+xdescribe('pageTitle', function() {
   var pageTitle
   var $rootScope
 

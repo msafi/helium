@@ -67,8 +67,8 @@ files.templatesJs = function() {
 }
 
 files.heliumScripts = function() {
-  files.heliumScriptsWithoutConfig()
   files.config()
+  files.heliumScriptsWithoutConfig()
 
   return files
 }
@@ -90,7 +90,7 @@ files.heliumScriptsWithoutConfig = function() {
 files.vendorScripts = function() {
   arrOfFiles.push(
     'vendor/angular-manual-bootstrap.js',
-    'vendor/bower_components/showdown/compressed/showdown.js',
+//    'vendor/bower_components/showdown/compressed/showdown.js',
     'vendor/bower_components/angular-sanitize/angular-sanitize.min.js',
     'vendor/bower_components/angular-markdown-directive/markdown.js'
   )

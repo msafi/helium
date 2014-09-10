@@ -100,6 +100,11 @@ module.exports = function(grunt) {
           css: {
             src: files.allStyles().bring(),
             cwd: 'build/'
+          },
+
+          config: {
+            src: files.config().bring(),
+            cwd: 'build/'
           }
         }
       },
@@ -108,7 +113,7 @@ module.exports = function(grunt) {
         src: '.tmp/index.html',
         blocks: {
           js: {
-            src: files.compiledVendorScripts().compiledScripts().config().bring(),
+            src: files.compiledVendorScripts().compiledScripts().bring(),
             cwd: '.tmp/'
           },
 
@@ -116,6 +121,11 @@ module.exports = function(grunt) {
             src: files.compiledStyles().bring(),
             cwd: '.tmp/'
           },
+
+          config: {
+            src: files.config().bring(),
+            cwd: '.tmp/'
+          }
         }
       }
     },
@@ -234,7 +244,7 @@ module.exports = function(grunt) {
         options: {
           files: files.vendorScriptsCdn().bring()
                       .concat(files.vendorTestDependencies().bring('../source/'))
-                      .concat(['../.tmp/vendor.js', '../.tmp/helium.js', '../.tmp/config.js'])
+                      .concat(['../.tmp/config.js', '../.tmp/vendor.js', '../.tmp/helium.js'])
                       .concat(files.testFiles().bring())
         },
         configFile: 'tests/karma.conf.js',

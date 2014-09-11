@@ -8,8 +8,8 @@ angular.module('helium')
       profile: {
         name: config.name,
         bio: config.bio,
-        picture: config.picture,
-        headerImage: config.headerImage,
+        pictureUrl: config.picture,
+        headerImageUrl: config.headerImage,
         socialLinks: parseSocialLinks(config.socialLinks)
       },
 
@@ -22,17 +22,29 @@ angular.module('helium')
       },
 
       submit: function() {
-        $q.all({
-          picture: mediaManager.uploadImage($scope.profile.picture),
-          headerImage: mediaManager.uploadImage($scope.profile.headerImage)
-        }).then(function(results) {
+        var imagesToUpload = {
+          picture: ($scope.profile.picture !== undefined) ?
+                   mediaManager.uploadImage($scope.profile.picture) :
+                   undefined,
+
+          headerImage: ($scope.profile.headerImage !== undefined) ?
+                       mediaManager.uploadImage($scope.profile.headerImage) :
+                       undefined
+        }
+
+        $scope.globals.loading = true
+        $q.all(imagesToUpload).then(function(results) {
           var name = $scope.profile.name
-          var pictureUrl = config.siteUrl + results.picture.request.params.Key
-          var headerImageUrl = config.siteUrl + results.headerImage.request.params.Key
           var bio = $scope.profile.bio
+          var pictureUrl = (results.picture !== undefined) ?
+                           config.siteUrl + results.picture.request.params.Key :
+                           undefined
+          var headerImageUrl = (results.headerImage !== undefined) ?
+                               config.siteUrl + results.headerImage.request.params.Key :
+                               undefined
           var socialLinks = (_.isString($scope.profile.socialLinks) === true) ?
                             parseSocialLinks($scope.profile.socialLinks) :
-                            null
+                            undefined
 
           return blogManager.updateConfig({
             name: name,
@@ -41,6 +53,8 @@ angular.module('helium')
             bio: bio,
             socialLinks: socialLinks
           })
+        }).finally(function() {
+          $scope.globals.loading = false
         })
       }
     })

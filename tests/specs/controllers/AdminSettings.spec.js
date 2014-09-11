@@ -71,6 +71,11 @@ describe('AdminSettings', function() {
 
       instantiateCtrl()
 
+      $scope.profile = {
+        picture: 'foo',
+        headerImage: 'bar'
+      }
+
       $scope.submit()
 
       $timeout.flush()
@@ -107,6 +112,19 @@ describe('AdminSettings', function() {
 
       expect(function() {
         $scope.submit()
+        $timeout.flush()
+      }).not.toThrow()
+    })
+
+    it('can handle the situation where the use does not specify any images', function() {
+      spyOn($q, 'all').and.returnValue($q.when({ picture: undefined, headerImage: undefined }))
+      spyOn(blogManager, 'updateConfig')
+
+      instantiateCtrl()
+
+      expect(function() {
+        $scope.submit()
+
         $timeout.flush()
       }).not.toThrow()
     })

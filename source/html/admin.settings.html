@@ -10,8 +10,8 @@
     <div class="form-group">
       <label for="picture">Picture</label>
       <input type="file" id="picture" he-onfileselect="picture">
-      <p class="help-block" ng-if="profile.picture !== undefined">
-        Current image is <code>{{profile.picture}}</code>
+      <p class="help-block" ng-if="profile.pictureUrl !== undefined">
+        Current image is <code>{{profile.pictureUrl}}</code>
       </p>
     </div>
 
@@ -19,8 +19,8 @@
       <label for="headerImage">Header image</label>
       <input type="file" id="headerImage" he-onfileselect="headerImage">
       <p class="help-block">This is a big image that will appear at the top of the homepage.</p>
-      <p class="help-block" ng-if="profile.headerImage !== undefined">
-        Current image is <code>{{profile.headerImage}}</code>
+      <p class="help-block" ng-if="profile.headerImageUrl !== undefined">
+        Current image is <code>{{profile.headerImageUrl}}</code>
       </p>
 
     </div>
@@ -53,6 +53,9 @@
 
     <hr>
 
-    <button type="button" ng-click="submit()" class="btn btn-primary btn-lg btn-block">Save</button>
+    <button type="button"
+            ng-click="submit()"
+            class="btn btn-primary btn-lg btn-block"
+            ng-disabled="globals.loading === true">Save</button>
   </form>
 </div>

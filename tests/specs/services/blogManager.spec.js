@@ -37,7 +37,7 @@ describe('blogManager', function() {
     })
 
     it('rewrites the new configuration into the index.html and uploads it back to the server', function() {
-      spyOn(backend, 'getFile').and.returnValue($q.when('some html heliumConfigurations = { foo: "bar" };;; more html'))
+      spyOn(backend, 'getFile').and.returnValue($q.when('some html heliumConfigurations = {\nfoo: "bar"\n};;; more html'))
       spyOn(backend, 'uploadFile')
 
       blogManager.updateConfig({ name: 'bar' })

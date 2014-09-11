@@ -30,9 +30,9 @@ angular.module('helium')
           var pictureUrl = config.siteUrl + results.picture.request.params.Key
           var headerImageUrl = config.siteUrl + results.headerImage.request.params.Key
           var bio = $scope.profile.bio
-          var socialLinks = (_.isString($scope.profile.socialLinks) === true)
-                            ? parseSocialLinks($scope.profile.socialLinks)
-                            : null
+          var socialLinks = (_.isString($scope.profile.socialLinks) === true) ?
+                            parseSocialLinks($scope.profile.socialLinks) :
+                            null
 
           return blogManager.updateConfig({
             name: name,

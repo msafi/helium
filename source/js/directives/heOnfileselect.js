@@ -2,11 +2,11 @@
 
 angular.module('helium')
 
-.directive("heOnfileselect",
+.directive('heOnfileselect',
   function() {
     return {
       scope: {
-        heOnfileselect: "="
+        heOnfileselect: '='
       },
 
       link: function($scope, $element) {

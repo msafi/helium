@@ -16,7 +16,9 @@ angular.module('helium')
         }))
       },
 
-      loadFile: function(file) {
+      // Not sure how to test FileReader
+      loadFile: /* istanbul ignore next */ function(file) {
+
         var loadedFile = $q.defer()
         var reader = new FileReader()
 

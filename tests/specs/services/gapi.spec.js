@@ -1,3 +1,6 @@
+/* jshint camelcase: false */
+/* global gapi */
+
 'use strict';
 
 describe('gapi', function() {

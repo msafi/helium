@@ -13,8 +13,8 @@ angular.module('helium')
         return backend.getFile('index.html').then(
           function success(indexHtml) {
             indexHtml = indexHtml.replace(
-              /(heliumConfigurations = {(.*\n)+})/gm,
-              "heliumConfigurations = " + JSON.stringify(config, null, 2)
+              /(heliumConfigurations = {(.*\n?)+};;;)/gm,
+              'heliumConfigurations = ' + JSON.stringify(config, null, 2) + ';;;'
             )
 
             return backend.uploadFile({

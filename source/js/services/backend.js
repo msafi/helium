@@ -34,8 +34,8 @@ angular.module('helium')
             return response.data
           },
 
-          function error(error) {
-            return $q.reject({ error: error.statusText })
+          function error(err) {
+            return $q.reject({ error: err.statusText })
           }
         )
       },

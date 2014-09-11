@@ -3,39 +3,23 @@
 angular.module('helium')
 
 .controller('Login',
-  function($scope, user, $state, $stateParams, systemConfig, blogManager, $q) {
+  function($scope, user, $state, $stateParams, systemConfig) {
     angular.extend($scope, {
       message: $stateParams.authError,
 
       authenticate: function() {
         return user.authenticate({ immediate: false }).then(
           function success() {
-            if ($stateParams.authError === systemConfig.messages.blogNotInitialized) {
-              $scope.initializingMessage = systemConfig.messages.initializing
-              $scope.initializing = true
-
-              // Kick off first time initialization
-              return blogManager.initialize()
-            }
+            $state.go('homepage')
           },
 
           function error(authResults) {
-            $scope.message = authResults.error
-            return $q.reject(authResults)
-          }
-        ).then(
-          function success() {
-            $state.go('admin')
-          },
-
-          function error(error) {
             $scope.message = systemConfig.messages.genericError
-            console.log(error)
+
+            console.log(authResults)
           }
-        ).finally(function() {
-          $scope.initializing = false
-        })
-      },
+        )
+      }
     })
   }
 )

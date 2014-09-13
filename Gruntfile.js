@@ -100,6 +100,11 @@ module.exports = function(grunt) {
           css: {
             src: files.allStyles().bring(),
             cwd: 'build/'
+          },
+
+          config: {
+            src: files.config().bring(),
+            cwd: 'build/'
           }
         }
       },
@@ -108,7 +113,7 @@ module.exports = function(grunt) {
         src: '.tmp/index.html',
         blocks: {
           js: {
-            src: files.compiledVendorScripts().compiledScripts().config().bring(),
+            src: files.compiledVendorScripts().compiledScripts().bring(),
             cwd: '.tmp/'
           },
 
@@ -116,6 +121,11 @@ module.exports = function(grunt) {
             src: files.compiledStyles().bring(),
             cwd: '.tmp/'
           },
+
+          config: {
+            src: files.config().bring(),
+            cwd: '.tmp/'
+          }
         }
       }
     },
@@ -160,7 +170,7 @@ module.exports = function(grunt) {
           compress: {
             sequences: true, properties: true, dead_code: true, drop_debugger: true, unsafe: true,
             conditionals: true, comparisons: true, evaluate: true, booleans: true, loops: true, unused: true,
-            if_return: true, join_vars: true, cascade: true, negate_iife: true
+            if_return: true, join_vars: true, cascade: true, negate_iife: true, screw_ie8: true
           },
           mangle: true
         },
@@ -234,7 +244,7 @@ module.exports = function(grunt) {
         options: {
           files: files.vendorScriptsCdn().bring()
                       .concat(files.vendorTestDependencies().bring('../source/'))
-                      .concat(['../.tmp/vendor.js', '../.tmp/helium.js', '../.tmp/config.js'])
+                      .concat(['../.tmp/config.js', '../.tmp/vendor.js', '../.tmp/helium.js'])
                       .concat(files.testFiles().bring())
         },
         configFile: 'tests/karma.conf.js',
@@ -276,15 +286,19 @@ module.exports = function(grunt) {
         loopfunc: true,
 
         globals: {
+          heliumConfigurations: true,
+
           angular: false,
           _: false,
           FastClick: false,
+          console: false,
+          confirm: false
         }
       },
 
       sourceFiles: {
         files: {
-          src: files.heliumScripts().bring('source/')
+          src: files.heliumScriptsWithoutConfig().bring('source/')
         }
       },
 
@@ -308,10 +322,14 @@ module.exports = function(grunt) {
             _: false,
             jasmine: false,
             $httpBackend: true,
+            systemConfig: true,
             config: true,
             $timeout: true,
             angular: false,
-            __FIXTURES__: false
+            __FIXTURES__: false,
+            flushAll: true,
+            $q: true,
+            console: true,
           },
         },
         files: {
@@ -330,6 +348,8 @@ module.exports = function(grunt) {
   ])
 
   grunt.registerTask('build', [
+    'jshint:sourceFiles',
+    'jshint:testFiles',
     'clean:buildAndTmpFolders',
     'copy:allSourceToTmp',
     'htmlmin:views',

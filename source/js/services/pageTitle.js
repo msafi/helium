@@ -5,17 +5,16 @@ angular.module('helium')
 .service('pageTitle',
   function(reactToRouteChange, config, $rootScope, systemConfig) {
     var pageTitleObject = { value: undefined }
-    var blogTitle = config.blogTitle
+    var name = config.name
+    var titlePrefix = systemConfig.messages.homepageTitlePrefix
 
     reactToRouteChange([
-      { name: 'homepage', value: blogTitle },
-      { name: 'admin.post', value:  systemConfig.ui.adminPostTitle + ' | ' + blogTitle },
-      { name: 'admin.managePosts', value: systemConfig.ui.adminManagePostsTitle + ' | ' + blogTitle },
-      { name: 'default', value: blogTitle }
+      { name: 'homepage', value: titlePrefix + name },
+      { name: 'default', value: titlePrefix + name }
     ], pageTitleObject, 'value')
 
     $rootScope.$on('post', function(event, post) {
-      pageTitleObject.value = post.title + ' | ' + blogTitle
+      pageTitleObject.value = post.title + ' | ' + name
     })
 
     return pageTitleObject

@@ -1,3 +1,5 @@
+/* global AWS */
+
 'use strict';
 
 describe('aws', function() {

@@ -22,6 +22,11 @@ angular.module('helium', [
         templateUrl: 'html/login.html',
         controller: 'Login',
       })
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'html/admin.settings.html',
+        controller: 'AdminSettings',
+      })
       .state('admin', {
         url: '/admin',
         templateUrl: 'html/admin.html',

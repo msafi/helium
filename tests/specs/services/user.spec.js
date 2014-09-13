@@ -1,3 +1,6 @@
+/* jshint camelcase: false, unused: false */
+/* global gapi */
+
 'use strict';
 
 describe('user', function() {

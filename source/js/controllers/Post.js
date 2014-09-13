@@ -24,8 +24,8 @@ angular.module('helium')
               $state.go('post', { postId: postId }, { inherit: false, reload: true })
             },
 
-            function error(error) {
-              console.log(error)
+            function error(err) {
+              console.log(err)
             }
           ).finally(function() {
             $scope.globals.loading = false

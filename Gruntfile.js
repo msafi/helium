@@ -22,41 +22,44 @@ module.exports = function(grunt) {
 
     copy: {
       allSourceToTmp: {
-        files: [
-          {
-            expand: true,
-            dot: true,
-            cwd: 'source',
-            src: files.allScripts().allStyles().views().indexHtml().bring(),
-            dest: '.tmp/'
-          }
-        ]
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: 'source',
+          src: files.allScripts().allStyles().views().indexHtml().bring(),
+          dest: '.tmp/'
+        }]
       },
 
       allSourceToBuild: {
-        files: [
-          {
-            expand: true,
-            dot: true,
-            cwd: 'source',
-            src: files.allScripts().allStyles().views().indexHtml().bring(),
-            dest: 'build/'
-          }
-        ]
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: 'source',
+          src: files.allScripts().allStyles().views().indexHtml().bring(),
+          dest: 'build/'
+        }]
       },
 
       build: {
-        files: [
-          {
-            expand: true,
-            dot: true,
-            cwd: '.tmp',
-            src: files.indexHtml().bring(),
-            dest: 'build/'
-          }
-        ]
-      }
-    },
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '.tmp',
+          src: files.indexHtml().bring(),
+          dest: 'build/'
+        }]
+      },
+
+      dist: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: 'build',
+          src: files.indexHtml().bring(),
+          dest: 'dist/'
+        }]
+}    },
 
     htmlmin: {
       // Minify all of our HTML files
@@ -362,6 +365,11 @@ module.exports = function(grunt) {
     'fileblocks:build',
     'smoosher:build',
     'copy:build'
+  ])
+
+  grunt.registerTask('dist', [
+    'build',
+    'copy:dist'
   ])
 
   grunt.registerTask('test', [

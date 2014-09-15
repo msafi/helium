@@ -119,6 +119,7 @@ files.allScripts = function() {
 
 files.heliumStyles = function() {
   arrOfFiles.push(
+    'css/style.css',
     'css/**/*.css'
   )
 

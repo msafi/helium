@@ -29,7 +29,7 @@ Or you can follow the [installation instructions](https://github.com/msafi/heliu
 
 ## Development
 
-If you'd like to try the app locally, do this:
+If you'd like to try or develop the app locally, do this:
 
 * Clone the repo
 * `npm i & bower i` in the root

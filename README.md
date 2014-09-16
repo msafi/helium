@@ -10,15 +10,15 @@ The current features of Helium are:
 * Manage posts: create, edit, and delete
 * Write posts in Markdown
 
-While the code has complete unit test coverage, the application isn't ready for prime time. For example there's no pagination and the homepage is slow to load due to the number of HTTP requests that need to be made. But this all can be fixed! 
+While the code has complete unit test coverage, the application isn't ready for prime time. For example, there's no pagination and the homepage is slow to load due to the number of HTTP requests that need to be made. But this all can be fixed! 
 
 ## Proof of concept
 
-I just want to put this out here as a proof of concept. The benefits are significant:
+I have created Helium as a proof of concept because the benefits are significant:
 
-* Pleasant to use because the entire application is front-end code with interactive AngularJS UI
-* Cheap because the only cost is Amazon S3 traffic bill
-* And since it's using Amazon S3, it inherits all the benefits of Amazon S3, such as automatic back-ups, versioning, and the ability to handle infinite amount of traffic
+* It is pleasant to use because the entire application is front-end code with interactive AngularJS UI
+* It is cheap because the only cost is Amazon S3 traffic bill
+* Since it's using Amazon S3, it inherits all the benefits of Amazon S3, such as automatic back-ups, versioning, and the ability to handle infinite amount of traffic
 * Amazon CDN, CloudFront, can easily be integrated for performance
 * Using Amazon IAM Web Identity Federation, all of Amazon services are available to the admin, so sending emails and scheduling tasks are also possible
 * Despite using a very light technology stack, it can support all the essential features that a full-stack system, like WordPress, supports

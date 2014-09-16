@@ -29,7 +29,7 @@ I just want to put this out here as a proof of concept. The benefits are signifi
 
 If you'd like to try it out, I've set up a demo blog where you can [login](http://helium-dev.s3-website-us-east-1.amazonaws.com/#!/login) with your Google account to access the admin menu and create new posts, etc.
 
-Or you can follow the [installation instructions](https://github.com/msafi/helium/wiki/Installation) if you want your own Helium blog.
+Or you can follow the [installation instructions](https://github.com/msafi/helium/wiki/Install-Helium) if you want your own Helium blog.
 
 ## Development
 

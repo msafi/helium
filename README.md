@@ -40,7 +40,7 @@ If you'd like to try or develop the app locally, do this:
 * `npm i` in `server/`
 * `grunt develop` in the root to start the server. Then load the app at `http://localhost:8000/`
 
-Even though the app will run locally, it'll still communicate with Amazon S3 to save and retrieve posts. Any saved posts or objects will get purged within 24 hours.
+Even though the app will run locally, it'll still communicate with Amazon S3 to save and retrieve posts. Any saved posts or objects will get purged after 24 hours.
 
 You can also use `grunt test` to run unit tests or `grunt coverage` to both run unit tests and get a test coverage report.
 
